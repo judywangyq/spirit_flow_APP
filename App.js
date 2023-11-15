@@ -1,12 +1,30 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import UserProfile from './screens/UserProfile';
+import Home from './screens/Home';
+import Journal from './screens/Journal';
 
 export default function App() {
+  const Tab = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>This is iteration 1!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+
+      <Tab.Navigator>
+        
+      <Tab.Screen
+        name="Home"
+        component={Home}
+      />
+      <Tab.Screen
+        name="Journal"
+        component={Journal}
+      />
+    </Tab.Navigator>
+
+    </NavigationContainer>
   );
 }
 
