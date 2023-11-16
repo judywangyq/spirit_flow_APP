@@ -8,8 +8,8 @@ import Journal from './screens/Journal';
 import { database } from "./firebase/firebaseSetup";
 
 export default function App() {
-  console.log(database);
-  
+  // console.log(database);
+
   const Tab = createBottomTabNavigator();
 
   return (

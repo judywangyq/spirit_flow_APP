@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 // import "../style/tarot.css";
-import { getRecommendedMovie } from '../components/movieService'
-import { collection, onSnapshot, getDocs } from 'firebase/firestore';
+import { getRecommendedMovie } from './movieService'
+import { collection, onSnapshot } from 'firebase/firestore';
 import { database } from '../firebase/firebaseSetup';
 
-function Home() {
+function DailyTarot() {
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [recommendedMovie, setRecommendedMovie] = useState(null);
   const [showCards, setShowCards] = useState(false);
-  const [lastClickedDate, setLastClickedDate] = useState(null);
 
   useEffect(() => {
     fetchCards();
@@ -39,10 +37,12 @@ function Home() {
 
 
   const displayStoredCards = () => {
-    const cardsStored = false; // Implement your logic here
-    const lastClicked = new Date().toISOString().split('T')[0];
-
-    if (cardsStored && lastClicked === lastClickedDate) {
+    const storedCards = JSON.parse(localStorage.getItem('selectedCards'));
+    const lastClickedDate = localStorage.getItem('lastClickedDate');
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    if (storedCards && storedCards.length === 3 && lastClickedDate === currentDate) {
+      setSelectedCards(storedCards);
       setShowCards(true);
     } else {
       generateCards();
@@ -61,9 +61,10 @@ function Home() {
         }
       }
       setSelectedCards(randomCards);
-      setShowCards(true);
+      localStorage.setItem('selectedCards', JSON.stringify(randomCards));
+      setShowCards(true);  // Set showCards to true after generating cards
       const currentDate = new Date().toISOString().split('T')[0];
-      setLastClickedDate(currentDate);
+      localStorage.setItem('lastClickedDate', currentDate);
     }
   };
 
@@ -143,62 +144,45 @@ function Home() {
 
 
   return (
-    <View style={styles.cardContainer}>
-      {!showCards ? (
-        <TouchableOpacity style={styles.button} onPress={handleGetReading}>
-          <Text style={styles.buttonText}>Get Your Daily Divine Energy Reading</Text>
-        </TouchableOpacity>
+    <div className="card-container">
+      {! showCards ? (
+        <button onClick={handleGetReading}>Get Your Daily Divine Energy Reading</button>
       ) : (
         <>
-          <View style={styles.topCard}>
-            <View style={styles.card}>
-              <Text style={styles.heading}>{selectedCards[0].name}</Text>
-              {/* <Text Fortune Telling: {selectedCards[0].fortune_telling}</Text>
+          <div className="top-card">
+            <div className="card">
+              <h2>{selectedCards[0].name}</h2>
+              <img src={`${process.env.PUBLIC_URL}/cards/${selectedCards[0].img}`} alt={selectedCards[0].name} />
               <p>Fortune Telling: {selectedCards[0].fortune_telling}</p>
               <p>Keywords: {selectedCards[0].keywords}</p>
-              <p>Questions to Ask: {selectedCards[0].questions_to_ask}</p> */}
-              {/* ... (other components add later) */}
-            </View>
-          </View>
-          <View style={styles.bottomCards}>
-            {selectedCards.slice(1).map((card) => (
-              <View key={card.id} style={styles.bottomCard}>
-                <Text style={styles.heading}>{card.name}</Text>
-                {/* ... (other components add later) */}
-              </View>
+              <p>Questions to Ask: {selectedCards[0].questions_to_ask}</p>
+            </div>
+          </div>
+          <div className="bottom-cards">
+            {selectedCards.slice(1).map(card => (
+              <div key={card.id} className="card bottom-card">
+                <h2>{card.name}</h2>
+                <img src={`${process.env.PUBLIC_URL}/cards/${card.img}`} alt={card.name} />
+                <p>Fortune Telling: {card.fortune_telling}</p>
+                <p>Keywords: {card.keywords}</p>
+                <p>Questions to Ask: {card.questions_to_ask}</p>
+              </div>
             ))}
-          </View>
-          <TouchableOpacity style={styles.getMovieButton} onPress={fetchRecommendedMovie}>
-            <Text style={styles.buttonText}>Daily movie for divine energy</Text>
-          </TouchableOpacity>
+          </div>
+          <button className="get-movie-button" onClick={fetchRecommendedMovie}>Daily movie for divine energy</button>
           {recommendedMovie && (
-            <View style={styles.recommendedMovie}>
-              <Text style={styles.heading}>Recommended Movie</Text>
-              {/* <p>Title: {recommendedMovie.Title}</p>
+            <div className="recommended-movie">
+              <h2>Recommended Movie</h2>
+              <p>Title: {recommendedMovie.Title}</p>
               <p>Year: {recommendedMovie.Year}</p>
               <p>Genre: {recommendedMovie.Genre}</p>
-              <p>Plot: {recommendedMovie.Plot}</p> */}
-              {/* ... (other components using Text) */}
-            </View>
+              <p>Plot: {recommendedMovie.Plot}</p>
+            </div>
           )}
         </>
       )}
-    </View>
+    </div>
   );
 }
 
-export default Home;
-
-
-const styles = StyleSheet.create({
-  getMovieButton: {
-    backgroundColor: 'blue',
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
+export default DailyTarot;

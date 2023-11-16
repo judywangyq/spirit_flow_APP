@@ -9,7 +9,7 @@ import {
   projectId,
   storageBucket,
   messagingSenderId,
-  appId,
+  appId
 } from "@env";
 
 // Your web app's Firebase configuration
@@ -26,7 +26,7 @@ const firebaseConfig = {
 const spiritFlowApp = initializeApp(firebaseConfig);
 export const database = getFirestore(spiritFlowApp);
 // export const auth = getAuth(spiritFlowApp);
-export const auth = initializeAuth(spiritFlowApp, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
-console.log(database);
+// export const auth = initializeAuth(spiritFlowApp, {
+//   persistence: getReactNativePersistence(AsyncStorage),
+// });
+// console.log(database);
