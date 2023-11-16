@@ -5,24 +5,27 @@ import { StyleSheet, Text, View } from 'react-native';
 import UserProfile from './screens/UserProfile';
 import Home from './screens/Home';
 import Journal from './screens/Journal';
+import { database } from "./firebase/firebaseSetup";
 
 export default function App() {
+  console.log(database);
+  
   const Tab = createBottomTabNavigator();
 
   return (
     <NavigationContainer>
 
       <Tab.Navigator>
-        
-      <Tab.Screen
-        name="Home"
-        component={Home}
-      />
-      <Tab.Screen
-        name="Journal"
-        component={Journal}
-      />
-    </Tab.Navigator>
+
+        <Tab.Screen
+          name="Home"
+          component={Home}
+        />
+        <Tab.Screen
+          name="Journal"
+          component={Journal}
+        />
+      </Tab.Navigator>
 
     </NavigationContainer>
   );
