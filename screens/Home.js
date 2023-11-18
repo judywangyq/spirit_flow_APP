@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 // import "../style/tarot.css";
 import { getRecommendedMovie } from '../components/movieService'
 import { collection, onSnapshot, getDocs } from 'firebase/firestore';
 import { database } from '../firebase/firebaseSetup';
+import cardsImagePath from '../components/cardsPath';
 
 function Home() {
   const [cards, setCards] = useState([]);
@@ -36,6 +37,11 @@ function Home() {
   useEffect(() => {
     displayStoredCards();
   }, [cards]);
+
+  useEffect(() => {
+    console.log('Selected Cards:', selectedCards);
+  }, [selectedCards]);
+  
 
 
   const displayStoredCards = () => {
@@ -141,49 +147,120 @@ function Home() {
     }
   }
 
+  // const cardsImagePath = {
+  //   c03: require('../assets/cards/c03.jpg'),
+  //   p01: require('../assets/cards/p01.jpg'),
+  //   w14: require('../assets/cards/w14.jpg'),
+  // };
+  // console.log(`${baseImagePath}${selectedCards[0].img}`);
+
 
   return (
-    <View style={styles.cardContainer}>
-      {!showCards ? (
-        <TouchableOpacity style={styles.button} onPress={handleGetReading}>
-          <Text style={styles.buttonText}>Get Your Daily Divine Energy Reading</Text>
-        </TouchableOpacity>
-      ) : (
-        <>
-          <View style={styles.topCard}>
-            <View style={styles.card}>
-              <Text style={styles.heading}>{selectedCards[0].name}</Text>
-              {/* <Text Fortune Telling: {selectedCards[0].fortune_telling}</Text>
-              <p>Fortune Telling: {selectedCards[0].fortune_telling}</p>
-              <p>Keywords: {selectedCards[0].keywords}</p>
-              <p>Questions to Ask: {selectedCards[0].questions_to_ask}</p> */}
-              {/* ... (other components add later) */}
-            </View>
-          </View>
-          <View style={styles.bottomCards}>
-            {selectedCards.slice(1).map((card) => (
-              <View key={card.id} style={styles.bottomCard}>
-                <Text style={styles.heading}>{card.name}</Text>
-                {/* ... (other components add later) */}
-              </View>
-            ))}
-          </View>
-          <TouchableOpacity style={styles.getMovieButton} onPress={fetchRecommendedMovie}>
-            <Text style={styles.buttonText}>Daily movie for divine energy</Text>
+    <ScrollView>
+
+      <View style={styles.cardContainer}>
+        {!showCards ? (
+          <TouchableOpacity style={styles.button} onPress={handleGetReading}>
+            <Text style={styles.buttonText}>Get Your Daily Divine Energy Reading</Text>
           </TouchableOpacity>
-          {recommendedMovie && (
-            <View style={styles.recommendedMovie}>
-              <Text style={styles.heading}>Recommended Movie</Text>
-              {/* <p>Title: {recommendedMovie.Title}</p>
-              <p>Year: {recommendedMovie.Year}</p>
-              <p>Genre: {recommendedMovie.Genre}</p>
-              <p>Plot: {recommendedMovie.Plot}</p> */}
-              {/* ... (other components using Text) */}
+        ) : (
+          <>
+            <View style={styles.topCard}>
+
+              <View style={styles.card}>
+                <Image
+                  source={cardsImagePath[selectedCards[0].img]}
+                  style={styles.cardImage}
+                  resizeMode="contain"
+                />
+
+                <Text style={styles.heading}>{selectedCards[0].name}</Text>
+                <Text style={styles.text}>
+                  Fortune Telling: {selectedCards[0].fortune_telling}
+                </Text>
+                <Text style={styles.text}>Keywords: {selectedCards[0].keywords}</Text>
+                <Text style={styles.text}>
+                  Questions to Ask: {selectedCards[0].questions_to_ask}
+                </Text>
+
+              </View>
             </View>
-          )}
-        </>
-      )}
-    </View>
+
+            <View style={styles.bottomCards}>
+              {/* {selectedCards.slice(1).map((card) => (
+                <View key={card.id} style={styles.bottomCard}>
+                  <Text style={styles.heading}>{card.name}</Text>
+                  <Text style={styles.text}>
+                    Fortune Telling: {card.fortune_telling}
+                  </Text>
+                  <Text style={styles.text}>Keywords: {selectedCards[0].keywords}</Text>
+                  <Text style={styles.text}>
+                    Questions to Ask: {selectedCards[0].questions_to_ask}
+                  </Text>
+                </View>
+              ))} */}
+              <View style={styles.card}>
+                <Image
+                  source={cardsImagePath[selectedCards[1].img]}
+                  style={styles.cardImage}
+                  resizeMode="contain"
+                />
+
+                <Text style={styles.heading}>{selectedCards[1].name}</Text>
+                <Text style={styles.text}>
+                  Fortune Telling: {selectedCards[1].fortune_telling}
+                </Text>
+                <Text style={styles.text}>Keywords: {selectedCards[1].keywords}</Text>
+                <Text style={styles.text}>
+                  Questions to Ask: {selectedCards[1].questions_to_ask}
+                </Text>
+              </View>
+
+              <View style={styles.card}>
+                <Image
+                  source={cardsImagePath[selectedCards[2].img]}
+                  style={styles.cardImage}
+                  resizeMode="contain"
+                />
+
+                <Text style={styles.heading}>{selectedCards[2].name}</Text>
+                <Text style={styles.text}>
+                  Fortune Telling: {selectedCards[2].fortune_telling}
+                </Text>
+                <Text style={styles.text}>Keywords: {selectedCards[1].keywords}</Text>
+                <Text style={styles.text}>
+                  Questions to Ask: {selectedCards[2].questions_to_ask}
+                </Text>
+              </View>
+
+
+
+            </View>
+            <TouchableOpacity style={styles.getMovieButton} onPress={fetchRecommendedMovie}>
+              <Text style={styles.buttonText}>Daily movie for divine energy</Text>
+            </TouchableOpacity>
+              {recommendedMovie && (
+                <View style={styles.recommendedMovie}>
+                <Text style={styles.heading}>Recommended Movie</Text>
+                <Text style={styles.text}>
+                  Title: {recommendedMovie.Title}
+                </Text>
+                <Text style={styles.text}>
+                  Year: {recommendedMovie.Year}
+                </Text>
+                <Text style={styles.text}>
+                  Genre: {recommendedMovie.Genre}
+                </Text>
+                <Text style={styles.text}>
+                  Plot: {recommendedMovie.Plot}
+                </Text>
+              </View>
+            )}
+          </>
+        )}
+      </View>
+
+    </ScrollView>
   );
 }
 
