@@ -3,6 +3,9 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   apiKey,
   authDomain,
@@ -26,7 +29,7 @@ const firebaseConfig = {
 const spiritFlowApp = initializeApp(firebaseConfig);
 export const database = getFirestore(spiritFlowApp);
 // export const auth = getAuth(spiritFlowApp);
-// export const auth = initializeAuth(spiritFlowApp, {
-//   persistence: getReactNativePersistence(AsyncStorage),
-// });
-// console.log(database);
+export const auth = initializeAuth(spiritFlowApp, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+console.log(database);
