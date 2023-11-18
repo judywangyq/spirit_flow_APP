@@ -14,8 +14,11 @@ import PressableButton from "./PressableButton";
 import { Ionicons } from "@expo/vector-icons";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
+import AddNewJournal from "./screens/AddNewJournal";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
 const AuthStack = (
   <>
     <Stack.Screen name="Login" component={Login} />
@@ -23,77 +26,84 @@ const AuthStack = (
   </>
 );
 
+const AppTabs = () => (
+  <Tab.Navigator>
+    <Tab.Screen
+      name="Home"
+      component={Home}
+      options={({ navigation }) => ({
+        // headerTitle: "SpiritFlow",
+        headerRight: () => (
+          <PressableButton
+            pressedFunction={() => {
+              console.log("logout pressed");
+              try {
+                signOut(auth);
+              } catch (err) {
+                console.log("signout err", err);
+              }
+            }}
+            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
+            pressedStyle={{ opacity: 0.6 }}
+          >
+            <Ionicons name="exit" size={24} color="black" />
+          </PressableButton>
+        ),
+        headerLeft: () => (
+          <PressableButton
+            pressedFunction={() => {
+              console.log("Menu Button pressed");
+              }
+            }
+            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
+            pressedStyle={{ opacity: 0.6 }}
+          >
+            <Ionicons name="menu" size={24} color="black" />
+          </PressableButton>
+        ),
+      })}
+    />
+    <Tab.Screen name="Journal" component={Journal} />
+  </Tab.Navigator>
+);
+
 const AppStack = (
   <>
     <Stack.Screen
-      name="Home"
-      component={Home}
-      options={({ navigation }) => {
-        return {
-          headerTitle: "SpiritFlow",
-          headerRight: () => {
-            return (
-              <PressableButton
-              pressedFunction={() => {
-                console.log("logout pressed");
-                try {
-                  signOut(auth);
-                } catch (err) {
-                  console.log("singout err", err);
-                }
-              }}
-              defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
-              pressedStyle={{ opacity: 0.6 }}
-            >
-              <Ionicons name="exit" size={24} color="black" />
-            </PressableButton>
-            );
-          },
-        };
-      }}
+      name="AppTabs"
+      component={AppTabs}
     />
     <Stack.Screen
       name="UserProfile"
       component={UserProfile}
       options={{
-        headerRight: () => {
-          return (
-            <PressableButton
-              pressedFunction={() => {
-                console.log("logout pressed");
-                try {
-                  signOut(auth);
-                } catch (err) {
-                  console.log("singout err", err);
-                }
-              }}
-              defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
-              pressedStyle={{ opacity: 0.6 }}
-            >
-              <Ionicons name="exit" size={24} color="black" />
-            </PressableButton>
-          );
-        },
+        headerRight: () => (
+          <PressableButton
+            pressedFunction={() => {
+              console.log("logout pressed");
+              try {
+                signOut(auth);
+              } catch (err) {
+                console.log("signout err", err);
+              }
+            }}
+            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
+            pressedStyle={{ opacity: 0.6 }}
+          >
+            <Ionicons name="exit" size={24} color="black" />
+          </PressableButton>
+        ),
       }}
     />
     <Stack.Screen
-      name="Journal"
-      component={Journal}
-      options={
-        ({ route }) => {
-          return {
-            title: route.params ? route.params.pressedGoal.text : "Details",
-          };
-        }
-        //pass a function that receives route prop as argument
-        //use route prop to extrat goal text and set it on title
-      }
+      name="Add New Journal"
+      component={AddNewJournal}
     />
   </>
 );
 
+
 export default function App() {
-  const Tab = createBottomTabNavigator();
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

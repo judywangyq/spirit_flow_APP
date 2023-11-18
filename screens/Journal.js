@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AddNewJournal from './AddNewJournal';
 
 export default function Journal() {
+  const navigation = useNavigation();
+
   const handleAddNew = () => {
+    navigation.navigate('Add New Journal');
     console.log('Add New button pressed');
   };
 
@@ -16,7 +20,7 @@ export default function Journal() {
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   addButton: {
     backgroundColor: 'blue',
     padding: 10,
@@ -27,4 +31,4 @@ const styles = {
     color: 'white',
     fontSize: 16,
   },
-};
+});
