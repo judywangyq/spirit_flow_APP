@@ -38,3 +38,39 @@ export async function editJournal(journalId, updatedJournal) {
         return false;
     }
     }
+
+export async function addUser(user) {
+    try {
+        const docRef = await addDoc(collection(database, "users"), user);
+        console.log("User Document written with ID: ", docRef.id);
+        console.log("New User: ", user);
+        return docRef.id;
+        } catch (err) {
+        console.error('Error adding new user:', err);
+        return null; 
+        }
+    }
+
+export async function deleteUser(uid) {
+    try {
+        await deleteDoc(doc(database, "users"), uid);
+        console.log("User deleted with ID: ", uid);
+        return true;
+    } catch (err) {
+        console.error('Error deleting user:', err);
+        console.log(err);
+    }
+    }
+
+export async function editUser(uid, updatedUser) {
+    try {
+        const userDocRef = doc(database, "users", uid);
+        await updateDoc(userDocRef, updatedUser); 
+        console.log("User updated with ID: ", uid);
+        console.log("updatedUser: ", updatedUser);
+        return true;
+    } catch (error) {
+        console.error('Error updating user:', error);
+        return false;
+    }
+    }

@@ -39,7 +39,7 @@ function Home() {
   }, [cards]);
 
   useEffect(() => {
-    console.log('Selected Cards:', selectedCards);
+    // console.log('Selected Cards:', selectedCards);
   }, [selectedCards]);
   
 

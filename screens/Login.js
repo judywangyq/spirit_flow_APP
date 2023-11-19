@@ -16,7 +16,9 @@ export default function Login({ navigation }) {
     }
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
+      console.log("******************This is User Cred******************");
       console.log(userCred);
+      console.log("******************This is User Cred******************");
     } catch (err) {
       console.log(err);
       if (err.code === "auth/invalid-login-credentials") {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup";
+import { addUser } from "../firebase/firestoreHelper";
 
 export default function Signup({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -27,7 +28,19 @@ export default function Signup({ navigation }) {
         email,
         password
       );
-      console.log(userCred);
+
+      await updateProfile(userCred.user, { displayName: fullName });
+
+      const { user } = userCred;
+
+      const newUser = await addUser({
+        uid: user.uid,
+        email: user.email,
+        fullName: fullName, // Add other user details as needed
+      });
+      
+      console.log("User added to Firestore with ID:", newUser);
+
     } catch (err) {
       console.log("sign up error ", err.code);
       if (err.code === "auth/invalid-email") {

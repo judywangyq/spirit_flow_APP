@@ -64,6 +64,7 @@ const AppTabs = () => (
       })}
     />
     <Tab.Screen name="Journal" component={Journal} />
+    <Tab.Screen name="User Profile" component={UserProfile} />
   </Tab.Navigator>
 );
 
@@ -107,7 +108,9 @@ export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log("******************This is User******************");
       console.log(user);
+      console.log("******************This is User******************");
       if (user) {
         // a valid user is logged in
         setIsUserLoggedIn(true);
