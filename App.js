@@ -5,6 +5,7 @@ import { database } from "./firebase/firebaseSetup";
 import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, Button} from 'react-native';
+import "./firebase/firebaseSetup";
 import UserProfile from './screens/UserProfile';
 import Home from './screens/Home';
 import Journal from './screens/Journal';
@@ -15,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
 import AddNewJournal from "./screens/AddNewJournal";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,7 +34,6 @@ const AppTabs = () => (
       name="Home"
       component={Home}
       options={({ navigation }) => ({
-        // headerTitle: "SpiritFlow",
         headerRight: () => (
           <PressableButton
             pressedFunction={() => {
@@ -74,7 +75,7 @@ const AppStack = (
       name="AppTabs"
       component={AppTabs}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="UserProfile"
       component={UserProfile}
       options={{
@@ -95,7 +96,7 @@ const AppStack = (
           </PressableButton>
         ),
       }}
-    />
+    /> */}
     <Stack.Screen
       name="Add New Journal"
       component={AddNewJournal}
@@ -134,29 +135,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
-// export default function App() {
-//   // console.log(database);
-
-//   const Tab = createBottomTabNavigator();
-
-//   return (
-//     <NavigationContainer>
-
-//       <Tab.Navigator>
-
-//         <Tab.Screen
-//           name="Home"
-//           component={Home}
-//         />
-//         <Tab.Screen
-//           name="Journal"
-//           component={Journal}
-//         />
-//       </Tab.Navigator>
-
-//     </NavigationContainer>
-//   );
-// }
 
 const styles = StyleSheet.create({
   container: {

@@ -13,7 +13,8 @@ export default function Signup({ navigation }) {
   const loginHandler = () => {
     navigation.replace("Login");
   };
-  const signupHandler = async () => {
+
+const signupHandler = async () => {
     if (!fullName || !email || !password || !confirmPassword) {
       Alert.alert("Fields should not be empty");
       return;
@@ -23,6 +24,7 @@ export default function Signup({ navigation }) {
       return;
     }
     try {
+      // Create a user with email and password
       const userCred = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -46,12 +48,30 @@ export default function Signup({ navigation }) {
       if (err.code === "auth/invalid-email") {
         Alert.alert("email is invalid");
       } else if (err.code === "auth/weak-password") {
-        Alert.alert("password should be minimum 6 characters");
+        Alert.alert("password should be a minimum of 6 characters");
       } else if (err.code === "auth/email-already-in-use") {
         Alert.alert("email already in use, please use another email");
       }
     }
   };
+
+  const fetchUserData = async (uid) => {
+    try {
+      const userDocRef = doc(database, 'users', uid);
+      const docSnap = await getDoc(userDocRef);
+  
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        setFullName(userData.fullName);
+        setEmail(userData.email);
+      } else {
+        console.log('User document does not exist');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+  
   return (
     <View style={styles.container}>
     <Text style={styles.label}>Full Name</Text>
