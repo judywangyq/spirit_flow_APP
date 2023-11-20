@@ -74,15 +74,18 @@ const signupHandler = async () => {
   
   return (
     <View style={styles.container}>
-    <Text style={styles.label}>Full Name</Text>
-    <TextInput
+      <Text style={styles.title}>SpiritFlow</Text>
+      <View style={styles.spacing} />
+      <Text style={styles.label}>Full Name</Text>
+      <TextInput
         style={styles.input}
         placeholder="Full Name"
         value={fullName}
         onChangeText={(changedText) => {
-        setFullName(changedText);
+          setFullName(changedText);
         }}
       />
+
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
@@ -92,6 +95,7 @@ const signupHandler = async () => {
           setEmail(changedText);
         }}
       />
+
       <Text style={styles.label}>Password</Text>
       <TextInput
         style={styles.input}
@@ -102,6 +106,7 @@ const signupHandler = async () => {
           setPassword(changedText);
         }}
       />
+
       <Text style={styles.label}>Confirm Password</Text>
       <TextInput
         style={styles.input}
@@ -112,6 +117,7 @@ const signupHandler = async () => {
           setConfirmPassword(changedText);
         }}
       />
+
       <Button title="Register" onPress={signupHandler} />
       <Button title="Already Registered? Login" onPress={loginHandler} />
     </View>
@@ -123,16 +129,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "stretch",
-    justifyContent: "center",
+    paddingHorizontal: 20, 
+  },
+  title: {
+    fontSize: 50, 
+    fontWeight: "bold", 
+    marginLeft: 10,
+    marginTop: 100, 
+    marginBottom: 10,
+    fontFamily:"Cochin",
+  },
+  spacing: {
+    marginBottom: 80,
   },
   input: {
     borderColor: "#552055",
     borderWidth: 2,
-    width: "90%",
-    margin: 5,
-    padding: 5,
+    width: "100%", 
+    marginVertical: 5,
+    padding: 10, 
   },
   label: {
     marginLeft: 10,
+    marginBottom: 5, 
+    alignSelf: "flex-start",
   },
 });
