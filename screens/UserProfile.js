@@ -7,6 +7,10 @@ import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore
 const UserProfile = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+
+
+
   const fetchUserData = async (uid) => {
     console.log("here the uid is,", uid); // here is good
     try {
