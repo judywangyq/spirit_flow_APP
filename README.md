@@ -3,12 +3,74 @@ Iteration 1
 Members: Judy Wang, Yingying Feng
 
 App Introduction: 
-
 SpiritFlow provides you with valuable insights, guiding you through life's challenges through tarot cards reading. Uncover key words and thought-provoking questions that will help you navigate your day.
 In addition, our app goes beyond readings and offers personalized movie recommendations to boost your luck and inner peace, letting you embrace a journey of self-discovery and reflection through our journaling feature, allowing you to monitor your energy flows over time.
 
+
+
 Contributions:
 Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page as well as the User Profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery(Contributed by Judy). Worked on other files together.
+
+
+
+
+Firestore Database:
+In our Firestore database, we've created two primary data collections: "Tarot Cards" and "Users," with an additional sub-collection under "Users" aptly named "Journals."
+The rationale behind placing the "Journal" collection under the "User" collection is to establish a clear association between each journal and its creator. This ensures that when fetching an individual journal, the corresponding uid allows us to identify the user who created that specific journal. 
+
+-----Tarot Cards-----
+-fields:
+
+Fortune_telling (string)
+img (string)
+keywords (string)
+name (string)
+questions_to_ask (string)
+
+-Utilization:
+The "Tarot Cards" collection serves a dual purpose. Firstly, by fetching three cards daily, we dynamically display them on the "Home" page, providing users with insightful daily energy guidance. Secondly, the associated keywords are employed to retrieve movie suggestions from an external API, enhancing user experience.
+
+-Status: Fully functioning
+
+-----Users-----
+-fields:
+
+email (string)
+fullName (string)
+uid (string)
+Sub-collection: "Journals"
+
+-Utilization:
+The "Users" collection is integral to our system. The unique uid acts as the key to fetch individualized journals for each user, presenting detailed information on the "Journal" screen. Additionally, this identifier will later facilitate the retrieval of journal locations for the "discovery" page.
+
+-CRUD Operations:
+addUser(user)
+deleteUser(uid)
+editUser(uid, updatedUser)
+
+-Status: Fully functioning
+
+-----Journals (Sub-collection under User)-----
+-fields:
+
+date (timestamp)
+energyRating (integer)
+negativeThoughts (string)
+positiveThoughts (string)
+
+
+-Utilization:
+This sub-collection is pivotal for users to create and manage their journals. The fields within the "Journal" collection are employed during the creation of a new journal on the "Add New" page. Users can input their positive and negative thoughts, select an energy rating, and seamlessly add a new journal to their collection.
+
+-CRUD Operations:
+
+addJournal(uid, journal)
+deleteJournal(userId, journalId)
+editJournal(journalId, updatedJournal)
+
+-Status: Fully functioning
+
+
 
 ScreenShot:
 1. Signup
