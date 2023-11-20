@@ -1,33 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { deleteJournal, editJournal } from '../firebase/firestoreHelper'; 
+import { addJournal, deleteJournal, editJournal } from '../firebase/firestoreHelper'; 
+import { auth } from '../firebase/firebaseSetup';
 
 export default function AddNewJournal() {
   const navigation = useNavigation();
   const route = useRoute();
-  const editItem = route.params?.editItem;
+  const editJournalData = route.params?.editJournal;
 
   const [positiveThoughts, setPositiveThoughts] = useState('');
-  const [nagativeThoughts, setNagativeThoughts] = useState('');
+  const [negativeThoughts, setNegativeThoughts] = useState('');
   const [energyRating, setEnergyRating] = useState('');
+
+  const [journalDate, setJournalDate] = useState(new Date());
+
+  useEffect(() => {
+    if (editJournalData) {
+      setPositiveThoughts(editJournalData.positiveThoughts || '');
+      setNegativeThoughts(editJournalData.negativeThoughts || '');
+      setEnergyRating(editJournalData.energyRating?.toString() || '');
+
+      if (editJournalData.date && editJournalData.date.seconds) {
+        const timestamp = editJournalData.date.seconds * 1000;
+        setJournalDate(new Date(timestamp));
+      }
+    }
+  }, [editJournalData]);
 
   const handleSave = async () => {
     if (!energyRating) {
       Alert.alert("Energy Rating can't be empty");
       return;
     }
-    navigation.goBack();
+
+    const currentDate = new Date(); // Get the current date
+    const defaultDate = currentDate.toISOString(); // Convert to ISO string format  
+
+    const newJournal = {
+      positiveThoughts,
+      negativeThoughts,
+      energyRating: parseInt(energyRating, 10),
+      date: defaultDate,
+    };
+
+    // console.log('newJournal:', newJournal); 
+
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        console.log('User not authenticated');
+        return;
+      }
+  
+      const uid = user.uid;
+  
+      if (editJournalData) {
+        await editJournal(editJournalData.id, newJournal);
+        Alert.alert('Journal Updated', 'Journal has been updated successfully.');
+      } else {
+        await addJournal(uid, newJournal);
+        Alert.alert('Journal Added', 'Journal has been added successfully.');
+      }
+  
+      navigation.goBack();
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'Failed to save journal. Please try again.');
+    }
   };
 
-  const handleCancel = async () => {
+  const handleCancel = () => {
     navigation.goBack();
   };
 
   const handleDelete = async () => {
+    if (!editJournalData) {
+      return;
+    }
+
     try {
-      await deleteJournal(editJournal.id);
-      console.log(" deleted", editJournal.id);
+
+      const user = auth.currentUser;
+      if (!user) {
+        console.log('User not authenticated');
+        return;
+      }
+  
+      const uid = user.uid;
+
+      await deleteJournal(uid, editJournalData.id);
       Alert.alert('Journal Deleted', 'Journal has been deleted successfully.');
       navigation.goBack();
     } catch (error) {
@@ -38,7 +100,11 @@ export default function AddNewJournal() {
 
   return (
     <View>
-      {/* <Text>Add A New Journal</Text> */}
+
+      <View>
+        <Text>Date: {journalDate.toISOString()}</Text>
+      </View>
+
       <View>
         <Text>My Positive Thoughts:</Text>
         <TextInput
@@ -52,8 +118,8 @@ export default function AddNewJournal() {
         <Text>My Negative Thoughts:</Text>
         <TextInput
           placeholder="I feel upset..."
-          value={nagativeThoughts}
-          onChangeText={setNagativeThoughts}
+          value={negativeThoughts}
+          onChangeText={setNegativeThoughts}
         />
       </View>
 
@@ -69,34 +135,7 @@ export default function AddNewJournal() {
 
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={handleCancel} />
-      <Button title="Delete" onPress={handleDelete} />
-
+      {editJournalData && <Button title="Delete" onPress={handleDelete} />}
     </View>
   );
 }
-
-
-// import React from 'react';
-// import { useNavigation } from '@react-navigation/native';
-// import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-// export default function AddNewJournal() {
-
-//   const handleNewHournal = () => {
-//     console.log('Add New Journal Page');
-//   };
-
-//   return (
-//     <View>
-//       <Text style={styles.Text}>Add New Journal</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   Text: {
-//     color: 'blue',
-//     fontSize: 16,
-//   },
-// });
-

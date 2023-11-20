@@ -1,43 +1,101 @@
-import { collection, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { auth } from '../firebase/firebaseSetup';
 import { database } from "./firebaseSetup";
 
-///////  firebase is not ready!!!!//////////
+// export async function addJournal(journal) {
+//     try {
+//         const docRef = await addDoc(collection(database, "journals"), journal);
+//         console.log("Journal Document written with ID: ", docRef.id);
+//         console.log("New Journal: ", journal);
+//         return docRef.id;
+//       } catch (err) {
+//         console.error('Error adding new journal:', err);
+//         return null; 
+//       }
+//     }
 
-export async function addJournal(journal) {
-    try {
-        const docRef = await addDoc(collection(database, "journals"), journal);
-        console.log("Journal Document written with ID: ", docRef.id);
-        console.log("New Journal: ", journal);
-        return docRef.id;
-      } catch (err) {
-        console.error('Error adding new journal:', err);
-        return null; 
-      }
-    }
+// export async function addJournal(uid, journal) {
+//     try {
+//       const docRef = await addDoc(collection(database, `users/${uid}/journals`), journal);
+//       console.log("Journal Document written with ID: ", docRef.id);
+//       console.log("New Journal: ", journal);
+//       return docRef.id;
+//     } catch (err) {
+//       console.error('Error adding new journal:', err);
+//       return null; 
+//     }
+//   }
 
-export async function deleteJournal(journalId) {
+export async function addJournal(uid, journal) {
     try {
-        await deleteDoc(doc(database, "journals"), journalId);
-        console.log("Journal deleted with ID: ", journalId);
-        return true;
+      const defaultDate = serverTimestamp();
+      const journalWithDate = {
+        ...journal,
+        date: defaultDate,
+      };
+  
+      const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
+      console.log("Journal Document written with ID: ", docRef.id);
+      console.log("New Journal: ", journalWithDate);
+      return docRef.id;
     } catch (err) {
-        console.error('Error deleting journal:', err);
-        console.log(err);
+      console.error('Error adding new journal:', err);
+      return null; 
     }
-    }
+  }
+
+export async function deleteJournal(userId, journalId) {
+  try {
+    const journalDocRef = doc(database, `users/${userId}/journals/${journalId}`);
+
+    // Delete the journal document
+    await deleteDoc(journalDocRef);
+
+    console.log('Journal deleted successfully.');
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting journal:', error);
+    return false;
+  }
+}
 
 export async function editJournal(journalId, updatedJournal) {
     try {
-        const journalDocRef = doc(database, "journals", journalId);
-        await updateDoc(journalDocRef, updatedJournal); 
-        console.log("Journal updated with ID: ", journalId);
-        console.log("updatedJournal: ", updatedJournal);
-        return true;
-    } catch (error) {
-        console.error('Error updating journal:', error);
+      const user = auth.currentUser;
+      if (!user) {
+        console.log('User not authenticated');
         return false;
+      }
+  
+      const uid = user.uid;
+      const journalDocRef = doc(database, `users/${uid}/journals`, journalId);
+  
+      // Exclude 'date' field from the update
+      const { date, ...updatedData } = updatedJournal;
+  
+      // Ensure 'date' is not present in updatedData
+      if ('date' in updatedData) {
+        console.warn('The "date" field should not be present in updatedData.');
+        return false;
+      }
+  
+      console.log('Updating journal with ID:', journalId);
+      console.log('Updated Journal:', updatedData);
+  
+      // Update the journal document without the 'date' field
+      await updateDoc(journalDocRef, updatedData);
+  
+      console.log('Journal updated successfully.');
+  
+      return true;
+    } catch (error) {
+      console.error('Error updating journal:', error);
+      return false;
     }
-    }
+  }
+  
+  
 
 export async function addUser(user) {
     try {

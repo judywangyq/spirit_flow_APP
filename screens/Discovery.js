@@ -1,7 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function Discovery() {
+
+
   return (
-    <div>Discovery</div>
-  )
-}
+    <View>
+      <Text>This is Discovery Page</Text>
+    </View>
+  );
+
+};

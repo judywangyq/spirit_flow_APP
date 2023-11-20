@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
 import AddNewJournal from "./screens/AddNewJournal";
+import Discovery from "./screens/Discovery";
 
 
 const Stack = createNativeStackNavigator();
@@ -66,13 +67,14 @@ const AppTabs = () => (
     />
     <Tab.Screen name="Journal" component={Journal} />
     <Tab.Screen name="User Profile" component={UserProfile} />
+    <Tab.Screen name="Discovery" component={Discovery} />
   </Tab.Navigator>
 );
 
 const AppStack = (
   <>
     <Stack.Screen
-      name="AppTabs"
+      name="SpiritFlow"
       component={AppTabs}
     />
     {/* <Stack.Screen
