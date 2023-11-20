@@ -9,7 +9,7 @@ In addition, our app goes beyond readings and offers personalized movie recommen
 
 
 Contributions:
-Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page as well as the User Profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery(Contributed by Judy). Worked on other files together.
+Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, and firestore Database(Contributed by Judy). Worked on other files together.
 
 
 
