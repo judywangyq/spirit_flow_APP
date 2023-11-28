@@ -1,169 +1,5 @@
-// import { useEffect, useState } from 'react';
-// import { Text, View, Button, TextInput } from 'react-native';
-// import { auth, database } from "../firebase/firebaseSetup";
-// import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
-// import { updateProfile } from 'firebase/auth';
-
-
-// const UserProfile = () => {
-//   const [fullName, setFullName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [isEditing, setIsEditing] = useState(false);
-
-
-
-//   const fetchUserData = async (uid) => {
-//     console.log("here the uid is,", uid); // here is good
-//     try {
-//       const q = query(collection(database, "users"), where("uid", "==", uid));
-//       const querySnapshot = await getDocs(q);
-//       console.log("querySnapshot is: ", querySnapshot);
-//       querySnapshot.forEach((doc) => {
-//         const userData = doc.data();
-//         setFullName(userData.fullName);
-//         setEmail(userData.email);
-//       });
-
-//     } catch (error) {
-//       console.error('Error fetching user data:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-//       if (user) {
-//         const uid = user.uid;
-//         console.log('Authenticated user:', user);
-//         console.log('Fetching user data for UID:', uid);
-//         // Fetch user data after a short delay
-//         // setTimeout(() => {
-//         //   fetchUserData(uid);
-//         // }, 1000);
-//         // fetchUserData(uid);
-//         try {
-//           // 直接调用 fetchUserData
-//           await fetchUserData(uid);
-//           console.log('User data fetched successfully.');
-//         } catch (fetchError) {
-//             console.error('Error fetching user data:', fetchError);
-//         }
-//       } else {
-//         // Handle the case where the user is not authenticated
-//         console.log('User not authenticated1');
-//       }
-//     });
-   
-//     // Cleanup the subscription when the component unmounts
-//     return () => unsubscribe();
-//   }, []);
-
-//   const handleEditPress = () => {
-//     const originalUserData = { fullName, email };
-//     setIsEditing(true);
-//   };
-
-//   // const handleSavePress = async () => {
-//   //   try {
-//   //     // Fetch the user document reference
-//   //     const q = query(collection(database, "users"), where("uid", "==", auth.currentUser.uid));
-//   //     const querySnapshot = await getDocs(q);
-
-//   //     if (!querySnapshot.empty) {
-//   //       const userDoc = querySnapshot.docs[0].ref;
-
-//   //       // Update the user document
-//   //       await updateDoc(userDoc, {
-//   //         fullName,
-//   //         email,
-//   //       });
-
-//   //       console.log('User data updated successfully');
-//   //     } else {
-//   //       console.error('User document not found');
-//   //     }
-//   //   } catch (error) {
-//   //     console.error('Error updating user data:', error);
-//   //   } finally {
-//   //     setIsEditing(false); // Reset the editing state
-//   //   }
-//   // };
-
-  
-
-//   const handleSavePress = async () => {
-//     try {
-//       // Fetch the user document reference
-//       const userQuery = query(collection(database, "users"), where("uid", "==", auth.currentUser.uid));
-//       const querySnapshot = await getDocs(userQuery);
-  
-//       if (!querySnapshot.empty) {
-//         const userDoc = querySnapshot.docs[0].ref;
-  
-//         // Update the user document in Firestore
-//         await updateDoc(userDoc, {
-//           fullName: fullName,
-//           email: email,
-//         });
-  
-//         console.log('User data updated successfully in Firestore');
-  
-//         // Update the user's profile in Firebase Authentication
-//         const user = auth.currentUser;
-//         await updateProfile(user, {
-//           displayName: fullName,
-//           email: email,
-//         });
-  
-//         console.log('User profile updated in Firebase Authentication:', user);
-//       } else {
-//         console.error('User document not found');
-//       }
-//     } catch (error) {
-//       console.error('Error updating user data:', error);
-//     } finally {
-//       setIsEditing(false); // Reset the editing state
-//     }
-//   };
-  
-  
-  
-//   const handleCancelPress = () => {
-//     setIsEditing(false); 
-//   };
-
-//   return (
-//     <View>
-//       {isEditing ? (
-//         <View>
-//           <TextInput
-//             placeholder="Enter Full Name"
-//             value={fullName}
-//             onChangeText={(text) => setFullName(text)}
-//           />
-//           <TextInput
-//             placeholder="Enter Email"
-//             value={email}
-//             onChangeText={(text) => setEmail(text)}
-//           />
-//           <Button title="Save" onPress={handleSavePress} />
-//           <Button title="Cancel" onPress={handleCancelPress} />
-//         </View>
-//       ) : (
-//         <View>
-//           <Text>Email: {email}</Text>
-//           <Text>Full Name: {fullName}</Text>
-//           <Button title="Edit" onPress={handleEditPress} />
-//         </View>
-//       )}
-//     </View>
-//   );
-  
-// };
-
-// export default UserProfile;
-
 import { useEffect, useState } from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
@@ -174,10 +10,10 @@ const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const fetchUserData = async (uid) => {
-    console.log("here the uid is,", uid);
     try {
       const q = query(collection(database, "users"), where("uid", "==", uid));
       const querySnapshot = await getDocs(q);
+
       querySnapshot.forEach((doc) => {
         const userData = doc.data();
         setFullName(userData.fullName);
@@ -235,7 +71,15 @@ const UserProfile = () => {
           displayName: fullName,
         });
 
-        console.log('User profile updated in Firebase Authentication:', user);
+        // Check if the displayName was successfully updated
+        const updatedUser = auth.currentUser;
+        console.log('Updated User in Firebase Authentication:', updatedUser);
+
+        if (updatedUser.displayName === fullName) {
+          console.log('User profile updated successfully in Firebase Authentication');
+        } else {
+          console.error('User profile update in Firebase Authentication failed');
+        }
       } else {
         console.error('User document not found');
       }
@@ -251,31 +95,202 @@ const UserProfile = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {isEditing ? (
-        <View>
+        <View style={styles.editContainer}>
           <TextInput
+            style={styles.input}
             placeholder="Enter Full Name"
             value={fullName}
             onChangeText={(text) => setFullName(text)}
           />
           <TextInput
+            style={styles.input}
             placeholder="Enter Email"
             value={email}
-            editable={false} // Make email input non-editable
+            editable={false}
           />
-          <Button title="Save" onPress={handleSavePress} />
-          <Button title="Cancel" onPress={handleCancelPress} />
+          <View style={styles.buttonContainer}>
+            <Button title="Save" onPress={handleSavePress} />
+            <Button title="Cancel" onPress={handleCancelPress} />
+          </View>
         </View>
       ) : (
-        <View>
-          <Text>Email: {email}</Text>
-          <Text>Full Name: {fullName}</Text>
-          <Button title="Edit" onPress={handleEditPress} />
+        <View style={styles.viewContainer}>
+          <Text style={styles.label}>Email: {email}</Text>
+          <Text style={styles.label}>Full Name: {fullName}</Text>
+          <View style={styles.buttonContainer}>
+            <Button title="Edit" onPress={handleEditPress} />
+          </View>
         </View>
       )}
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "stretch",
+    paddingHorizontal: 20,
+  },
+  viewContainer: {
+    marginTop: 50,
+  },
+  editContainer: {
+    marginTop: 50,
+  },
+  input: {
+    borderColor: "#552055",
+    borderWidth: 2,
+    width: "100%",
+    marginVertical: 10,
+    padding: 10,
+  },
+  label: {
+    marginLeft: 10,
+    marginBottom: 5,
+    alignSelf: "flex-start",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+});
+
 export default UserProfile;
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { View, Text, TextInput, Button, Alert } from 'react-native';
+// import { auth, database } from '../firebase/firebaseSetup';
+// import {
+//   getDocs,
+//   collection,
+//   query,
+//   where,
+//   updateDoc,
+//   EmailAuthProvider,
+//   reauthenticateWithCredential,
+//   updatePassword,
+// } from 'firebase/firestore';
+
+// import { updateProfile } from 'firebase/auth';
+
+// const UserProfile = () => {
+//   const [fullName, setFullName] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [oldPassword, setOldPassword] = useState('');
+//   const [newPassword, setNewPassword] = useState('');
+
+//   const fetchUserData = async (uid) => {
+//     try {
+//       const q = query(collection(database, 'users'), where('uid', '==', uid));
+//       const querySnapshot = await getDocs(q);
+//       querySnapshot.forEach((doc) => {
+//         const userData = doc.data();
+//         setFullName(userData.fullName);
+//         setEmail(userData.email);
+//       });
+//     } catch (error) {
+//       console.error('Error fetching user data:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+//       if (user) {
+//         const uid = user.uid;
+//         try {
+//           await fetchUserData(uid);
+//         } catch (fetchError) {
+//           console.error('Error fetching user data:', fetchError);
+//         }
+//       }
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+
+//   const handleEditPress = () => {
+//     setIsEditing(true);
+//   };
+
+//   const handleSavePress = async () => {
+//     try {
+//       const userQuery = query(collection(database, 'users'), where('uid', '==', auth.currentUser.uid));
+//       const querySnapshot = await getDocs(userQuery);
+
+//       if (!querySnapshot.empty) {
+//         const userDoc = querySnapshot.docs[0].ref;
+
+//         // Update the user document in Firestore
+//         await updateDoc(userDoc, {
+//           fullName: fullName,
+//         });
+
+//         console.log('User data updated successfully in Firestore');
+
+//         // Update the user's profile in Firebase Authentication
+//         const user = auth.currentUser;
+//         await updateProfile(user, {
+//           displayName: fullName,
+//         });
+
+//         // Check if newPassword is provided and update the password
+//         if (newPassword) {
+//           // Verify the old password before changing
+//           const credential = EmailAuthProvider.credential(user.email, oldPassword);
+//           await reauthenticateWithCredential(user, credential);
+
+//           // Update the password
+//           await updatePassword(user, newPassword);
+
+//           // Provide feedback to the user
+//           Alert.alert('Password changed successfully');
+
+//           // Clear the password fields
+//           setOldPassword('');
+//           setNewPassword('');
+//         }
+
+//         console.log('User profile updated in Firebase Authentication:', user);
+//       } else {
+//         console.error('User document not found');
+//       }
+//     } catch (error) {
+//       console.error('Error updating user data:', error);
+//     } finally {
+//       setIsEditing(false); // Reset the editing state
+//     }
+//   };
+
+//   const handleCancelPress = () => {
+//     setIsEditing(false);
+//   };
+
+//   return (
+//     <View>
+//       {isEditing ? (
+//         <View>
+//           <TextInput placeholder="Enter Full Name" value={fullName} onChangeText={(text) => setFullName(text)} />
+//           <TextInput placeholder="Enter Old Password" secureTextEntry value={oldPassword} onChangeText={(text) => setOldPassword(text)} />
+//           <TextInput placeholder="Enter New Password" secureTextEntry value={newPassword} onChangeText={(text) => setNewPassword(text)} />
+//           <Button title="Save" onPress={handleSavePress} />
+//           <Button title="Cancel" onPress={handleCancelPress} />
+//         </View>
+//       ) : (
+//         <View>
+//           <Text>Email: {email}</Text>
+//           <Text>Full Name: {fullName}</Text>
+//           <Button title="Edit" onPress={handleEditPress} />
+//         </View>
+//       )}
+//     </View>
+//   );
+// };
+
+// export default UserProfile;
