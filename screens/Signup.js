@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup";
-import { addUser } from "../firebase/firestoreHelper";
+import { addUser } from "../firebase/firebaseHelper";
 
 export default function Signup({ navigation }) {
   const [fullName, setFullName] = useState("");

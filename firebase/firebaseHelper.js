@@ -1,30 +1,6 @@
 import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { auth } from '../firebase/firebaseSetup';
+import { auth } from './firebaseSetup';
 import { database } from "./firebaseSetup";
-
-// export async function addJournal(journal) {
-//     try {
-//         const docRef = await addDoc(collection(database, "journals"), journal);
-//         console.log("Journal Document written with ID: ", docRef.id);
-//         console.log("New Journal: ", journal);
-//         return docRef.id;
-//       } catch (err) {
-//         console.error('Error adding new journal:', err);
-//         return null; 
-//       }
-//     }
-
-// export async function addJournal(uid, journal) {
-//     try {
-//       const docRef = await addDoc(collection(database, `users/${uid}/journals`), journal);
-//       console.log("Journal Document written with ID: ", docRef.id);
-//       console.log("New Journal: ", journal);
-//       return docRef.id;
-//     } catch (err) {
-//       console.error('Error adding new journal:', err);
-//       return null; 
-//     }
-//   }
 
 export async function addJournal(uid, journal) {
     try {
@@ -120,15 +96,41 @@ export async function deleteUser(uid) {
     }
     }
 
-export async function editUser(uid, updatedUser) {
-    try {
-        const userDocRef = doc(database, "users", uid);
-        await updateDoc(userDocRef, updatedUser); 
-        console.log("User updated with ID: ", uid);
-        console.log("updatedUser: ", updatedUser);
-        return true;
-    } catch (error) {
-        console.error('Error updating user:', error);
-        return false;
-    }
-    }
+// export async function editUser(uid, updatedUser) {
+//     try {
+//         const userDocRef = doc(database, "users", uid);
+//         await updateDoc(userDocRef, updatedUser); 
+//         console.log("User updated with ID: ", uid);
+//         console.log("updatedUser: ", updatedUser);
+
+//         // 更新用户配置信息
+//         const authUser = auth.currentUser;
+//         await updateProfile(authUser, {
+//           displayName: updatedUser.fullName,
+//         //   photoURL: updatedUser.photoURL
+//         });
+
+//         return true;
+//     } catch (error) {
+//         console.error('Error updating user:', error);
+//         return false;
+//     }
+//   }
+export async function editUser(uid, updatedFullName) {
+  try {
+    const userDocRef = doc(database, "users", uid);
+    await updateDoc(userDocRef, { fullName: updatedFullName });
+
+    // 更新用户配置信息
+    const authUser = auth.currentUser;
+    await updateProfile(authUser, {
+      displayName: updatedFullName,
+    });
+
+    console.log("User data and profile updated successfully.");
+    return true;
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    return false;
+  }
+}
