@@ -3,11 +3,13 @@ import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import ImageManager from "../components/ImageManager";
 
 const UserProfile = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [takenImageUri, setTakenImageUri] = useState("");
 
   const fetchUserData = async (uid) => {
     try {
@@ -69,6 +71,7 @@ const UserProfile = () => {
         const user = auth.currentUser;
         await updateProfile(user, {
           displayName: fullName,
+          uri: takenImageUri,
         });
 
         // Check if the displayName was successfully updated
@@ -94,8 +97,14 @@ const UserProfile = () => {
     setIsEditing(false);
   };
 
+  function passImageUri(uri) {
+    // store the uri in a state variable
+    setTakenImageUri(uri);
+  }
+
   return (
     <View style={styles.container}>
+      <ImageManager passImageUri={passImageUri} />
       {isEditing ? (
         <View style={styles.editContainer}>
           <TextInput
