@@ -49,6 +49,7 @@ export default function Journal() {
         <Text>{item.positiveThoughts}</Text>
         <Text>{item.negativeThoughts}</Text>
         <Text>{item.energyRating}</Text>
+        {/* <Text>{item.location?.latitude}</Text> */}
       </TouchableOpacity>
     );
   };

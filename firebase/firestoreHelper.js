@@ -33,6 +33,13 @@ export async function addJournal(uid, journal) {
         ...journal,
         date: defaultDate,
       };
+
+      // if (journal.location && journal.location.latitude && journal.location.longitude) {
+      //   journalWithDate.location = {
+      //     latitude: journal.location.latitude,
+      //     longitude: journal.location.longitude,
+      //   };
+      // }
   
       const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
       console.log("Journal Document written with ID: ", docRef.id);

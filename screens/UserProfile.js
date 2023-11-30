@@ -10,7 +10,6 @@ const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
 
-
   const fetchUserData = async (uid) => {
     console.log("here the uid is,", uid); // here is good
     try {
