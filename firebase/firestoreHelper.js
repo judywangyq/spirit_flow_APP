@@ -1,4 +1,4 @@
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth } from '../firebase/firebaseSetup';
 import { database } from "./firebaseSetup";
 
@@ -40,7 +40,7 @@ export async function addJournal(uid, journal) {
       //     longitude: journal.location.longitude,
       //   };
       // }
-  
+      // const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
       const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
       console.log("Journal Document written with ID: ", docRef.id);
       console.log("New Journal: ", journalWithDate);
@@ -106,13 +106,13 @@ export async function editJournal(journalId, updatedJournal) {
 
 export async function addUser(user) {
     try {
-        const docRef = await addDoc(collection(database, "users"), user);
-        console.log("User Document written with ID: ", docRef.id);
+      await setDoc(doc(database, "users",user.uid), user);
+        //addDoc generates an id automatically. But I want to use user's uid as doc's id. so instead of addDoc we should use setDoc
         console.log("New User: ", user);
-        return docRef.id;
+        // return docRef.id;
         } catch (err) {
         console.error('Error adding new user:', err);
-        return null; 
+        // return null; 
         }
     }
 

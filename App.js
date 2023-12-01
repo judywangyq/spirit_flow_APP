@@ -17,6 +17,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
 import AddNewJournal from "./screens/AddNewJournal";
 import Discovery from "./screens/Discovery";
+import Map from "./components/Map";
 
 
 const Stack = createNativeStackNavigator();
@@ -66,6 +67,7 @@ const AppTabs = () => (
       })}
     />
     <Tab.Screen name="Journal" component={Journal} />
+    <Tab.Screen name="Map" component={Map} />
     <Tab.Screen name="User Profile" component={UserProfile} />
     <Tab.Screen name="Discovery" component={Discovery} />
   </Tab.Navigator>

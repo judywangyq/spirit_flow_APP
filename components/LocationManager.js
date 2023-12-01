@@ -56,16 +56,18 @@ export default function LocationManager({ onLocationChange }) {
       console.log("locate user ", err);
     }
   }
-//   const chooseLocationHandler = () => {
-//     navigation.navigate("Map");
-//   };
+
+  const chooseLocationHandler = () => {
+    navigation.navigate("Map");
+  };
+
   return (
     <View>
       <Button title="Locate Me!" onPress={locateMeHandler} />
-      {/* <Button
+      <Button
         title="Let me choose on the map"
         onPress={chooseLocationHandler}
-      /> */}
+      />
       {location && (
         <Image
           source={{

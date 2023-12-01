@@ -34,6 +34,8 @@ export default function Journal() {
 
     fetchUserJournals();
   }, [userJournals]);
+  
+  
 
   const handleAddNew = () => {
     navigation.navigate('Add New Journal');
@@ -49,7 +51,6 @@ export default function Journal() {
         <Text>{item.positiveThoughts}</Text>
         <Text>{item.negativeThoughts}</Text>
         <Text>{item.energyRating}</Text>
-        {/* <Text>{item.location?.latitude}</Text> */}
       </TouchableOpacity>
     );
   };
