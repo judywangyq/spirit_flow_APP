@@ -58,7 +58,13 @@ export default function LocationManager({ onLocationChange }) {
   }
 
   const chooseLocationHandler = () => {
-    navigation.navigate("Map");
+    console.log("Navigate to Map. Location is", location);
+    navigation.navigate("Map", { initialLocation: location });
+  };
+
+  const saveLocationHandler = async () => {
+    await saveUserInfo({ location: location });
+    // navigation.navigate("Home");
   };
 
   return (
@@ -76,6 +82,13 @@ export default function LocationManager({ onLocationChange }) {
           style={styles.image}
         />
       )}
+
+      <Button
+        disabled={!location}
+        title="Save Location"
+        onPress={saveLocationHandler}
+      />
+
     </View>
   );
 }

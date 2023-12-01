@@ -84,7 +84,7 @@ const AppTabs = () => (
       })}
     />
     <Tab.Screen name="Journal" component={Journal} />
-    <Tab.Screen name="Map" component={Map} />
+    {/* <Tab.Screen name="Map" component={Map} /> */}
     <Tab.Screen name="User Profile" component={UserProfile} />
     <Tab.Screen name="Discovery" component={Discovery} />
   </Tab.Navigator>
@@ -122,6 +122,7 @@ const AppStack = (
       name="Add New Journal"
       component={AddNewJournal}
     />
+    <Stack.Screen name="Map" component={Map} />
   </>
 );
 

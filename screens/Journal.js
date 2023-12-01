@@ -8,25 +8,61 @@ export default function Journal() {
   const navigation = useNavigation();
   const [userJournals, setUserJournals] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchUserJournals = async () => {
+  //     try {
+  //       const user = auth.currentUser;
+  //       const uid = user.uid;
+
+  //       const q = query(collection(database, `users/${uid}/journals`));
+  //       const querySnapshot = await getDocs(q);
+
+  //       const journalsData = [];
+  //       querySnapshot.forEach((doc) => {
+  //         const journal = doc.data();
+  //         journalsData.push({
+  //           id: doc.id,
+  //           ...journal,
+  //         });
+  //       });
+
+  //       setUserJournals(journalsData);
+  //     } catch (error) {
+  //       console.error('Error fetching user journals:', error);
+  //     }
+  //   };
+
+  //   fetchUserJournals();
+  // }, [userJournals]);
+
+  const [authenticated, setAuthenticated] = useState(false);
+
   useEffect(() => {
     const fetchUserJournals = async () => {
       try {
         const user = auth.currentUser;
-        const uid = user.uid;
 
-        const q = query(collection(database, `users/${uid}/journals`));
-        const querySnapshot = await getDocs(q);
+        // Check if the user is authenticated before fetching journals
+        if (user) {
+          setAuthenticated(true);
+          const uid = user.uid;
 
-        const journalsData = [];
-        querySnapshot.forEach((doc) => {
-          const journal = doc.data();
-          journalsData.push({
-            id: doc.id,
-            ...journal,
+          const q = query(collection(database, `users/${uid}/journals`));
+          const querySnapshot = await getDocs(q);
+
+          const journalsData = [];
+          querySnapshot.forEach((doc) => {
+            const journal = doc.data();
+            journalsData.push({
+              id: doc.id,
+              ...journal,
+            });
           });
-        });
 
-        setUserJournals(journalsData);
+          setUserJournals(journalsData);
+        } else {
+          setAuthenticated(false);
+        }
       } catch (error) {
         console.error('Error fetching user journals:', error);
       }
@@ -34,6 +70,11 @@ export default function Journal() {
 
     fetchUserJournals();
   }, [userJournals]);
+
+  // Render the component only if the user is authenticated
+  if (!authenticated) {
+    return <Text>You are not signed in.</Text>;
+  }
   
   
 

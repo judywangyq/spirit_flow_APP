@@ -12,7 +12,7 @@ Contributions:
 Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, and firestore Database(Contributed by Judy). Worked on other files together.
 
 
-
+==================================================================================================================
 
 Firestore Database:
 In our Firestore database, we've created two primary data collections: "Tarot Cards" and "Users," with an additional sub-collection under "Users" aptly named "Journals."
@@ -69,6 +69,65 @@ deleteJournal(userId, journalId)
 editJournal(journalId, updatedJournal)
 
 -Status: Fully functioning
+
+==================================================================================================================
+
+Authentication
+
+==================================================================================================================
+
+External API use
+
+Our application leverages the OMDb API (https://www.omdbapi.com/) to fetch movie recommendations based on keywords generated from three tarot cards. The process involves the following steps:
+
+Keywords Generation:
+The application generates keywords from three tarot cards, such as "confession," "passion," and "suspicion."
+
+Movie Retrieval:
+The movieService module takes these keywords as parameters, forming a search query for movies.
+
+Random Movie Selection:
+Upon successful retrieval of movie data, the application checks if movies are found (data.Search is truthy and has length > 0).
+If movies are available, it randomly selects one movie from the search results.
+
+User Interaction:
+Users can initiate this process by clicking the "Daily Movie for Divine Energy" button.
+
+Displaying Results:
+The selected movie is then displayed to the user, providing an entertaining and divinely inspired movie recommendation.
+
+-Status: Fully functioning
+
+==================================================================================================================
+Camera use
+(.........)
+
+==================================================================================================================
+
+Location use
+
+In the "Add New Journal" feature, location services play a crucial role in enriching the user experience. The process is as follows:
+
+Location Options:
+Users are presented with two location options:
+"Locate Me": Retrieves the real-time location of the user.
+"Let Me Choose on the Map": Allows users to manually select a desired location.
+
+
+Integration with Firestore:
+The chosen location information is then incorporated into the journal object before being stored in the Firestore database.
+
+The 'Discovery' screen offers a panoramic view of journals created by users, each uniquely marked by location pins. The pins, distinguished by colors, discreetly reveal the energy level (ranging from black for level 1 to red for level 5) associated with each journal. This curated glimpse into shared experiences maintains user privacy by anonymously displaying only the energy levels at specific locations, fostering a sense of community without divulging detailed journal content.
+
+-Status: "Locate Me" Fully functioning
+-Status: "Let me choose on the map" partially functioning
+
+==================================================================================================================
+
+Notification
+(To be Done in next iteration)
+
+==================================================================================================================
 
 
 
