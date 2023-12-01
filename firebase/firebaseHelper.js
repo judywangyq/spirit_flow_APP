@@ -1,4 +1,4 @@
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, setDoc  } from "firebase/firestore";
 import { auth } from '../firebase/firebaseSetup';
 import { database } from "./firebaseSetup";
 
@@ -27,29 +27,29 @@ import { database } from "./firebaseSetup";
 //   }
 
 export async function addJournal(uid, journal) {
-    try {
-      const defaultDate = serverTimestamp();
-      const journalWithDate = {
-        ...journal,
-        date: defaultDate,
-      };
+  try {
+    const defaultDate = serverTimestamp();
+    const journalWithDate = {
+      ...journal,
+      date: defaultDate,
+    };
 
-      // if (journal.location && journal.location.latitude && journal.location.longitude) {
-      //   journalWithDate.location = {
-      //     latitude: journal.location.latitude,
-      //     longitude: journal.location.longitude,
-      //   };
-      // }
-      // const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
-      const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
-      console.log("Journal Document written with ID: ", docRef.id);
-      console.log("New Journal: ", journalWithDate);
-      return docRef.id;
-    } catch (err) {
-      console.error('Error adding new journal:', err);
-      return null; 
-    }
+    // if (journal.location && journal.location.latitude && journal.location.longitude) {
+    //   journalWithDate.location = {
+    //     latitude: journal.location.latitude,
+    //     longitude: journal.location.longitude,
+    //   };
+    // }
+    // const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
+    const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
+    console.log("Journal Document written with ID: ", docRef.id);
+    console.log("New Journal: ", journalWithDate);
+    return docRef.id;
+  } catch (err) {
+    console.error('Error adding new journal:', err);
+    return null; 
   }
+}
 
 export async function deleteJournal(userId, journalId) {
   try {
@@ -104,7 +104,7 @@ export async function editJournal(journalId, updatedJournal) {
   
   
 
-export async function addUser(user) {
+  export async function addUser(user) {
     try {
       await setDoc(doc(database, "users",user.uid), user);
         //addDoc generates an id automatically. But I want to use user's uid as doc's id. so instead of addDoc we should use setDoc
@@ -127,15 +127,41 @@ export async function deleteUser(uid) {
     }
     }
 
-export async function editUser(uid, updatedUser) {
-    try {
-        const userDocRef = doc(database, "users", uid);
-        await updateDoc(userDocRef, updatedUser); 
-        console.log("User updated with ID: ", uid);
-        console.log("updatedUser: ", updatedUser);
-        return true;
-    } catch (error) {
-        console.error('Error updating user:', error);
-        return false;
-    }
-    }
+// export async function editUser(uid, updatedUser) {
+//     try {
+//         const userDocRef = doc(database, "users", uid);
+//         await updateDoc(userDocRef, updatedUser); 
+//         console.log("User updated with ID: ", uid);
+//         console.log("updatedUser: ", updatedUser);
+
+//         // 更新用户配置信息
+//         const authUser = auth.currentUser;
+//         await updateProfile(authUser, {
+//           displayName: updatedUser.fullName,
+//         //   photoURL: updatedUser.photoURL
+//         });
+
+//         return true;
+//     } catch (error) {
+//         console.error('Error updating user:', error);
+//         return false;
+//     }
+//   }
+export async function editUser(uid, updatedFullName) {
+  try {
+    const userDocRef = doc(database, "users", uid);
+    await updateDoc(userDocRef, { fullName: updatedFullName });
+
+    // 更新用户配置信息
+    const authUser = auth.currentUser;
+    await updateProfile(authUser, {
+      displayName: updatedFullName,
+    });
+
+    console.log("User data and profile updated successfully.");
+    return true;
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    return false;
+  }
+}

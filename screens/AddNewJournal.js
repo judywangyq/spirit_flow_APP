@@ -6,7 +6,7 @@ import { serverTimestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { addJournal, deleteJournal, editJournal } from '../firebase/firestoreHelper'; 
+import { addJournal, deleteJournal, editJournal } from '../firebase/firebaseHelper'; 
 import { auth } from '../firebase/firebaseSetup';
 import LocationManager from '../components/LocationManager';
 
