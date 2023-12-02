@@ -12,6 +12,13 @@ Contributions:
 Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, firestore Database, and the map location function(Contributed by Judy). Worked on other files together.
 
 
+Iteration 2 Add:
+- Authentication (Iter1)
+- Camera use (Iter2)
+- Location use(Iter2)
+- Notification (Next Iter)
+- External API use (Iter1)
+
 ==================================================================================================================
 
 Firestore Database:
