@@ -1,6 +1,10 @@
 import { View, Image, Button, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons'; 
+
+import PressableButton from "../PressableButton";
 
 export default function ImageManager({ passImageUri }) {
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
@@ -32,8 +36,15 @@ export default function ImageManager({ passImageUri }) {
   };
 
   return (
-    <View>
-      <Button onPress={takeImageHandler} title="Take an Image" />
+    <View style={{ alignItems: 'center' }}>
+      {/* <Button onPress={takeImageHandler} title="Add a profile photo"  /> */}
+      <PressableButton
+        pressedFunction={takeImageHandler}
+        defaultStyle={{ backgroundColor: "#bbb", padding: 10}}
+        pressedStyle={{ opacity: 0.6 }}
+        >
+        <Entypo name="camera" size={24} color="black" />
+      </PressableButton>
       {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
     </View>
   );
