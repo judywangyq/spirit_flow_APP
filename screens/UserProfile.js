@@ -4,7 +4,6 @@ import { auth, database } from "../firebase/firebaseSetup";
 import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 import ImageManager from "../components/ImageManager";
-import { Ionicons } from "@expo/vector-icons";
 
 const UserProfile = () => {
   const [fullName, setFullName] = useState('');
