@@ -180,6 +180,15 @@ ScreenShot:
 7. Discovery
    <img width="426" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/1abce4bb-11be-4cb1-a42b-497e722f4750">
 
+   ![Alt text](78ee33fa8c3cc6f855bd2b05cd457c7.png)
+
+
+8. Locations
+![Alt text](a9c185acc1894d86d33332e3cfed282.jpg)
+
+
+9. Camera
+![Alt text](98466b17ddc2b971e8d4ce545c6e83c.png)
    
 
 
