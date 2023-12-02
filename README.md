@@ -1,4 +1,4 @@
-Iteration 1
+Iteration 1 / 2
 
 Members: Judy Wang, Yingying Feng
 
@@ -9,7 +9,7 @@ In addition, our app goes beyond readings and offers personalized movie recommen
 
 
 Contributions:
-Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, and firestore Database(Contributed by Judy). Worked on other files together.
+Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, firestore Database, and the map location function(Contributed by Judy). Worked on other files together.
 
 
 ==================================================================================================================
@@ -188,7 +188,9 @@ ScreenShot:
 
 
 9. Camera
-![Alt text](98466b17ddc2b971e8d4ce545c6e83c.png)
+![Alt text](WechatIMG15.jpg)
+![Alt text](WechatIMG16.jpg)
+![Alt text](WechatIMG18.jpg)
    
 
 
