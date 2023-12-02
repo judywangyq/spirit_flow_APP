@@ -100,7 +100,10 @@ The selected movie is then displayed to the user, providing an entertaining and 
 
 ==================================================================================================================
 Camera use
-(.........)
+
+In the user profile page, the camera icon in the page allows user to click and take a picture as user profile picture. 
+
+-Status: Fully functioning
 
 ==================================================================================================================
 
