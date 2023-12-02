@@ -1,24 +1,55 @@
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { auth } from './firebaseSetup';
+import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, setDoc  } from "firebase/firestore";
+import { auth } from '../firebase/firebaseSetup';
 import { database } from "./firebaseSetup";
 
+// export async function addJournal(journal) {
+//     try {
+//         const docRef = await addDoc(collection(database, "journals"), journal);
+//         console.log("Journal Document written with ID: ", docRef.id);
+//         console.log("New Journal: ", journal);
+//         return docRef.id;
+//       } catch (err) {
+//         console.error('Error adding new journal:', err);
+//         return null; 
+//       }
+//     }
+
+// export async function addJournal(uid, journal) {
+//     try {
+//       const docRef = await addDoc(collection(database, `users/${uid}/journals`), journal);
+//       console.log("Journal Document written with ID: ", docRef.id);
+//       console.log("New Journal: ", journal);
+//       return docRef.id;
+//     } catch (err) {
+//       console.error('Error adding new journal:', err);
+//       return null; 
+//     }
+//   }
+
 export async function addJournal(uid, journal) {
-    try {
-      const defaultDate = serverTimestamp();
-      const journalWithDate = {
-        ...journal,
-        date: defaultDate,
-      };
-  
-      const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
-      console.log("Journal Document written with ID: ", docRef.id);
-      console.log("New Journal: ", journalWithDate);
-      return docRef.id;
-    } catch (err) {
-      console.error('Error adding new journal:', err);
-      return null; 
-    }
+  try {
+    const defaultDate = serverTimestamp();
+    const journalWithDate = {
+      ...journal,
+      date: defaultDate,
+    };
+
+    // if (journal.location && journal.location.latitude && journal.location.longitude) {
+    //   journalWithDate.location = {
+    //     latitude: journal.location.latitude,
+    //     longitude: journal.location.longitude,
+    //   };
+    // }
+    // const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
+    const docRef = await addDoc(collection(database, `users/${uid}/journals`), journalWithDate);
+    console.log("Journal Document written with ID: ", docRef.id);
+    console.log("New Journal: ", journalWithDate);
+    return docRef.id;
+  } catch (err) {
+    console.error('Error adding new journal:', err);
+    return null; 
   }
+}
 
 export async function deleteJournal(userId, journalId) {
   try {
@@ -73,15 +104,15 @@ export async function editJournal(journalId, updatedJournal) {
   
   
 
-export async function addUser(user) {
+  export async function addUser(user) {
     try {
-        const docRef = await addDoc(collection(database, "users"), user);
-        console.log("User Document written with ID: ", docRef.id);
+      await setDoc(doc(database, "users",user.uid), user);
+        //addDoc generates an id automatically. But I want to use user's uid as doc's id. so instead of addDoc we should use setDoc
         console.log("New User: ", user);
-        return docRef.id;
+        // return docRef.id;
         } catch (err) {
         console.error('Error adding new user:', err);
-        return null; 
+        // return null; 
         }
     }
 

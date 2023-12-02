@@ -3,11 +3,13 @@ import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import ImageManager from "../components/ImageManager";
 
 const UserProfile = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [takenImageUri, setTakenImageUri] = useState("");
 
   const fetchUserData = async (uid) => {
     try {
@@ -69,6 +71,7 @@ const UserProfile = () => {
         const user = auth.currentUser;
         await updateProfile(user, {
           displayName: fullName,
+          uri: takenImageUri,
         });
 
         // Check if the displayName was successfully updated
@@ -94,8 +97,14 @@ const UserProfile = () => {
     setIsEditing(false);
   };
 
+  function passImageUri(uri) {
+    // store the uri in a state variable
+    setTakenImageUri(uri);
+  }
+
   return (
     <View style={styles.container}>
+      <ImageManager passImageUri={passImageUri} />
       {isEditing ? (
         <View style={styles.editContainer}>
           <TextInput
@@ -117,8 +126,8 @@ const UserProfile = () => {
         </View>
       ) : (
         <View style={styles.viewContainer}>
-          <Text style={styles.label}>Email: {email}</Text>
           <Text style={styles.label}>Full Name: {fullName}</Text>
+          <Text style={styles.label}>Email: {email}</Text>
           <View style={styles.buttonContainer}>
             <Button title="Edit" onPress={handleEditPress} />
           </View>
@@ -162,135 +171,3 @@ const styles = StyleSheet.create({
 export default UserProfile;
 
 
-
-// import React, { useEffect, useState } from 'react';
-// import { View, Text, TextInput, Button, Alert } from 'react-native';
-// import { auth, database } from '../firebase/firebaseSetup';
-// import {
-//   getDocs,
-//   collection,
-//   query,
-//   where,
-//   updateDoc,
-//   EmailAuthProvider,
-//   reauthenticateWithCredential,
-//   updatePassword,
-// } from 'firebase/firestore';
-
-// import { updateProfile } from 'firebase/auth';
-
-// const UserProfile = () => {
-//   const [fullName, setFullName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [oldPassword, setOldPassword] = useState('');
-//   const [newPassword, setNewPassword] = useState('');
-
-//   const fetchUserData = async (uid) => {
-//     try {
-//       const q = query(collection(database, 'users'), where('uid', '==', uid));
-//       const querySnapshot = await getDocs(q);
-//       querySnapshot.forEach((doc) => {
-//         const userData = doc.data();
-//         setFullName(userData.fullName);
-//         setEmail(userData.email);
-//       });
-//     } catch (error) {
-//       console.error('Error fetching user data:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-//       if (user) {
-//         const uid = user.uid;
-//         try {
-//           await fetchUserData(uid);
-//         } catch (fetchError) {
-//           console.error('Error fetching user data:', fetchError);
-//         }
-//       }
-//     });
-
-//     return () => unsubscribe();
-//   }, []);
-
-//   const handleEditPress = () => {
-//     setIsEditing(true);
-//   };
-
-//   const handleSavePress = async () => {
-//     try {
-//       const userQuery = query(collection(database, 'users'), where('uid', '==', auth.currentUser.uid));
-//       const querySnapshot = await getDocs(userQuery);
-
-//       if (!querySnapshot.empty) {
-//         const userDoc = querySnapshot.docs[0].ref;
-
-//         // Update the user document in Firestore
-//         await updateDoc(userDoc, {
-//           fullName: fullName,
-//         });
-
-//         console.log('User data updated successfully in Firestore');
-
-//         // Update the user's profile in Firebase Authentication
-//         const user = auth.currentUser;
-//         await updateProfile(user, {
-//           displayName: fullName,
-//         });
-
-//         // Check if newPassword is provided and update the password
-//         if (newPassword) {
-//           // Verify the old password before changing
-//           const credential = EmailAuthProvider.credential(user.email, oldPassword);
-//           await reauthenticateWithCredential(user, credential);
-
-//           // Update the password
-//           await updatePassword(user, newPassword);
-
-//           // Provide feedback to the user
-//           Alert.alert('Password changed successfully');
-
-//           // Clear the password fields
-//           setOldPassword('');
-//           setNewPassword('');
-//         }
-
-//         console.log('User profile updated in Firebase Authentication:', user);
-//       } else {
-//         console.error('User document not found');
-//       }
-//     } catch (error) {
-//       console.error('Error updating user data:', error);
-//     } finally {
-//       setIsEditing(false); // Reset the editing state
-//     }
-//   };
-
-//   const handleCancelPress = () => {
-//     setIsEditing(false);
-//   };
-
-//   return (
-//     <View>
-//       {isEditing ? (
-//         <View>
-//           <TextInput placeholder="Enter Full Name" value={fullName} onChangeText={(text) => setFullName(text)} />
-//           <TextInput placeholder="Enter Old Password" secureTextEntry value={oldPassword} onChangeText={(text) => setOldPassword(text)} />
-//           <TextInput placeholder="Enter New Password" secureTextEntry value={newPassword} onChangeText={(text) => setNewPassword(text)} />
-//           <Button title="Save" onPress={handleSavePress} />
-//           <Button title="Cancel" onPress={handleCancelPress} />
-//         </View>
-//       ) : (
-//         <View>
-//           <Text>Email: {email}</Text>
-//           <Text>Full Name: {fullName}</Text>
-//           <Button title="Edit" onPress={handleEditPress} />
-//         </View>
-//       )}
-//     </View>
-//   );
-// };
-
-// export default UserProfile;
