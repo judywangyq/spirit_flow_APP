@@ -21,6 +21,18 @@ import AddNewJournal from "./screens/AddNewJournal";
 import Discovery from "./screens/Discovery";
 import Map from "./components/Map";
 
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async function (notification) {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: true,
+    };
+  },
+});
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

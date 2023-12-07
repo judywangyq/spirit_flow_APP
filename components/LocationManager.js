@@ -49,6 +49,8 @@ export default function LocationManager({ onLocationChange }) {
         };
 
         setLocation(newLocation);
+
+        console.log("new location from Location Manager:", newLocation);
         onLocationChange(newLocation);
 
 
@@ -58,7 +60,7 @@ export default function LocationManager({ onLocationChange }) {
   }
 
   const chooseLocationHandler = () => {
-    console.log("Navigate to Map. Location is", location);
+    console.log("Navigate to Map. initial Location is", location);
     navigation.navigate("Map", { initialLocation: location });
   };
 

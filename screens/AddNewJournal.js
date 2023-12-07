@@ -16,6 +16,8 @@ export default function AddNewJournal() {
   const route = useRoute();
   const editJournalData = route.params?.editJournal;
 
+  // const routeSelectedLocation = route.params?.selectedLocation;
+
   const [positiveThoughts, setPositiveThoughts] = useState('');
   const [negativeThoughts, setNegativeThoughts] = useState('');
   const [energyRating, setEnergyRating] = useState('');
@@ -23,6 +25,12 @@ export default function AddNewJournal() {
   const [journalDate, setJournalDate] = useState(new Date());
 
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  // useEffect(() => {
+  //   console.log('Route Params:', route.params);
+  //   console.log('Selected Location from Route Params:', routeSelectedLocation);
+  //   console.log('Selected Location from "Locate Me!":', selectedLocation);
+  // }, [routeSelectedLocation, selectedLocation, route.params]);
 
   useEffect(() => {
     if (editJournalData) {
@@ -39,6 +47,8 @@ export default function AddNewJournal() {
   }, [editJournalData]);
 
   const handleSave = async () => {
+
+    // const effectiveSelectedLocation = selectedLocation || routeSelectedLocation;
 
     console.log('Selected Location:', selectedLocation);
 
@@ -58,6 +68,8 @@ export default function AddNewJournal() {
       location: {
         latitude: selectedLocation.latitude,
         longitude: selectedLocation.longitude,
+        // latitude: effectiveSelectedLocation.latitude,
+        // longitude: effectiveSelectedLocation.longitude,
       },
     };
 
@@ -156,6 +168,17 @@ export default function AddNewJournal() {
           <Text>Location:</Text>
           <Text>{selectedLocation ? `${selectedLocation.latitude}, ${selectedLocation.longitude}` : 'Loading...'}</Text>
         </View>
+
+        {/* <View>
+          <Text>Location:</Text>
+          <Text>
+            {selectedLocation
+              ? `${selectedLocation.latitude}, ${selectedLocation.longitude}`
+              : routeSelectedLocation
+              ? `${routeSelectedLocation.latitude}, ${routeSelectedLocation.longitude}`
+              : 'Loading...'}
+          </Text>
+        </View> */}
 
         <LocationManager
           onLocationChange={(location) => setSelectedLocation(location)}

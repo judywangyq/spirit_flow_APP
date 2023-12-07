@@ -5,6 +5,7 @@ import { getRecommendedMovie } from '../components/movieService'
 import { collection, onSnapshot, getDocs } from 'firebase/firestore';
 import { database } from '../firebase/firebaseSetup';
 import cardsImagePath from '../components/cardsPath';
+import NotificationManager from '../components/NotificationManager';
 
 function Home() {
   const [cards, setCards] = useState([]);
@@ -157,6 +158,8 @@ function Home() {
 
   return (
     <ScrollView>
+
+      <NotificationManager />
 
       <View style={styles.cardContainer}>
         {!showCards ? (

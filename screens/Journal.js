@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { collection, query, getDocs } from 'firebase/firestore';
@@ -102,16 +102,20 @@ export default function Journal() {
   };
 
   return (
-    <View>
-      <FlatList
-        data={userJournals}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
-      <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
-        <Text style={styles.buttonText}>Add New</Text>
-      </TouchableOpacity>
-    </View>
+    // <ScrollView>
+
+      <View>
+        <FlatList
+          data={userJournals}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+        <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
+          <Text style={styles.buttonText}>Add New</Text>
+        </TouchableOpacity>
+      </View>
+
+    // {/* </ScrollView> */}
   );
 }
 
