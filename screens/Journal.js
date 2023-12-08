@@ -102,20 +102,19 @@ export default function Journal() {
   };
 
   return (
-    // <ScrollView>
 
-      <View>
-        <FlatList
-          data={userJournals}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
-        <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
-          <Text style={styles.buttonText}>Add New</Text>
-        </TouchableOpacity>
-      </View>
+    <View>
+      <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
+        <Text style={styles.buttonText}>Add New</Text>
+      </TouchableOpacity>
+      
+      <FlatList
+        data={userJournals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
+    </View>
 
-    // {/* </ScrollView> */}
   );
 }
 

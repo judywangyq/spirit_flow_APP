@@ -24,13 +24,15 @@ import Map from "./components/Map";
 import * as Notifications from "expo-notifications";
 
 Notifications.setNotificationHandler({
+
   handleNotification: async function (notification) {
     return {
       shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: true,
-    };
-  },
+    }
+  }
+  
 });
 
 

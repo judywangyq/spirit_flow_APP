@@ -4,14 +4,17 @@ import * as Notifications from "expo-notifications";
 
 export default function NotificationManager() {
   const verifyPermission = async () => {
-    const status = await Notifications.getPermissionsAsync();
-    if (status.granted) {
-      return true;
-    }
-    const response = await Notifications.requestPermissionsAsync({
-      ios: { allowBadge: true },
-    });
-    return response.granted;
+    try {
+      const status = await Notifications.getPermissionsAsync();
+      console.log(status)
+      if (status.granted) {
+        return true;
+      }
+      const response = await Notifications.requestPermissionsAsync({
+        ios: { allowBadge: true },
+      });
+      return response.granted;
+    } catch (err) { console.log("verify permission ", err) }
   };
   const scheduleNotificationHandler = async () => {
     try {
@@ -24,6 +27,7 @@ export default function NotificationManager() {
         content: {
           title: "first notification",
           body: "OUR FIRST NOTIFICATION EVER!",
+          // data: { URL:"www.google.com" },
         },
         trigger: { seconds: 5 },
       });
@@ -34,7 +38,7 @@ export default function NotificationManager() {
   return (
     <View>
       <Button
-        title="Remine me to receive diving energy guidance"
+        title="Remind me to receive diving energy guidance"
         onPress={scheduleNotificationHandler}
       />
     </View>
