@@ -4,9 +4,11 @@ import MapView, { Marker } from "react-native-maps";
 
 export default function Map({ navigation, route }) {
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+
   function confirmLocationHandler() {
     console.log("Selected locations from MAP:", selectedLocation);
-    navigation.navigate("Add New Journal", { selectedLocation });
+    navigation.navigate("Add New Journal", { selectedLocation: selectedLocation });
   }
 
 

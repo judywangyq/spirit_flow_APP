@@ -17,6 +17,7 @@ export default function LocationManager({ onLocationChange }) {
     if (route.params) {
       // I have come from interactive map
       setLocation(route.params.selectedCoord);
+      console.log("Selected locations from Location ManagerMAP:", location);
     }
   }, [route]);
 
@@ -49,8 +50,9 @@ export default function LocationManager({ onLocationChange }) {
         };
 
         setLocation(newLocation);
-        onLocationChange(newLocation);
 
+        console.log("new location from Location Manager:", newLocation);
+        onLocationChange(newLocation);
 
     } catch (err) {
       console.log("locate user ", err);
@@ -58,7 +60,7 @@ export default function LocationManager({ onLocationChange }) {
   }
 
   const chooseLocationHandler = () => {
-    console.log("Navigate to Map. Location is", location);
+    console.log("Navigate to Map. initial Location is", location);
     navigation.navigate("Map", { initialLocation: location });
   };
 
