@@ -4,11 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { collection, query, getDocs } from 'firebase/firestore';
 import { LinearGradient } from 'expo-linear-gradient';
+import { LineChart } from 'react-native-chart-kit';
 import Colors from '../components/Colors';
 
 export default function Journal() {
   const navigation = useNavigation();
   const [userJournals, setUserJournals] = useState([]);
+
+  const [chartData, setChartData] = useState([]);
 
   // useEffect(() => {
   //   const fetchUserJournals = async () => {
@@ -61,7 +64,19 @@ export default function Journal() {
             });
           });
 
+          //sort by date
+          journalsData.sort((a, b) => b.date.seconds - a.date.seconds);
+
           setUserJournals(journalsData);
+
+          // Extract data for the line chart (date and energy level)
+          const chartData = journalsData.slice(0,5).map((journal) => ({
+            date: journal.date ? journal.date.seconds * 1000 : null, // Check if date exists
+            energyLevel: journal.energyRating,
+          })).filter((data) => data.date !== null); // Filter out entries with null dates              
+
+          setChartData(chartData);
+
         } else {
           setAuthenticated(false);
         }
@@ -114,12 +129,57 @@ export default function Journal() {
       <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
         <Text style={styles.buttonText}>Add New</Text>
       </TouchableOpacity>
+
+      {/* Line Chart */}
+      {chartData.length > 0 && (
+        <LineChart
+          data={{
+            labels: chartData.map((data) => new Date(data.date).toLocaleDateString()).reverse(),
+            datasets: [
+              {
+                data: chartData.map((data) => data.energyLevel).reverse(),
+              },
+            ],
+          }}
+          width={350} // from react-native
+          height={220}
+          yAxisLabel="Level"
+          yAxisSuffix=""
+          withVerticalLabels={true} // Show vertical labels on the Y-axis
+          chartConfig={{
+            backgroundColor: 'transparent', // Fully transparent background
+            // backgroundColor: 'white',
+            backgroundGradientFrom: 'white',
+            backgroundGradientTo: 'white',
+            decimalPlaces: 0, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+            propsForDots: {
+              r: '5',
+              strokeWidth: '2',
+              stroke: '#ffa726',
+            },
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
+            alignSelf: 'center', // Center the chart horizontally
+          }}
+          contentInset={{ left: 20, right: 20 }}
+          // spacingInner={0.5} // Adjust the spacing between bars
+        />
+      )}
       
       <FlatList
         data={userJournals}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
+
     </View>
     </>
   );

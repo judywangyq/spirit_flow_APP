@@ -11,6 +11,7 @@ import { auth } from '../firebase/firebaseSetup';
 import LocationManager from '../components/LocationManager';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../components/Colors';
+import MapView, { Marker } from 'react-native-maps';
 
 
 const styles = StyleSheet.create({
@@ -186,6 +187,26 @@ export default function AddNewJournal() {
           <Text>Location:</Text>
           <Text>{selectedLocation ? `${selectedLocation.latitude}, ${selectedLocation.longitude}` : 'Loading...'}</Text>
         </View>
+
+        {selectedLocation && (
+            <MapView
+              style={{ height: 200, marginVertical: 10 }}
+              initialRegion={{
+                latitude: selectedLocation.latitude,
+                longitude: selectedLocation.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              <Marker
+                coordinate={{
+                  latitude: selectedLocation.latitude,
+                  longitude: selectedLocation.longitude,
+                }}
+                title="Selected Location"
+              />
+            </MapView>
+          )}
 
         {/* <View>
           <Text>Location:</Text>

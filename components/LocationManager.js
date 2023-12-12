@@ -72,10 +72,10 @@ export default function LocationManager({ onLocationChange }) {
   return (
     <View>
       <Button title="Locate Me!" onPress={locateMeHandler} />
-      <Button
+      {/* <Button
         title="Let me choose on the map"
         onPress={chooseLocationHandler}
-      />
+      /> */}
       {location && (
         <Image
           source={{
@@ -85,11 +85,11 @@ export default function LocationManager({ onLocationChange }) {
         />
       )}
 
-      <Button
+      {/* <Button
         disabled={!location}
         title="Save Location"
         onPress={saveLocationHandler}
-      />
+      /> */}
 
     </View>
   );
