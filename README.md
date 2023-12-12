@@ -12,11 +12,11 @@ Contributions:
 Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, firestore Database, and the map location function(Contributed by Judy). Worked on other files together.
 
 
-Iteration 2 Add:
+Iteration divided:
 - Authentication (Iter1)
 - Camera use (Iter2)
 - Location use(Iter2)
-- Notification (Next Iter)
+- Notification (Iter3)
 - External API use (Iter1)
 
 ==================================================================================================================
@@ -109,7 +109,7 @@ The selected movie is then displayed to the user, providing an entertaining and 
 
 Camera use
 
-In the user profile page, the camera icon in the page allows user to click and take a picture as user profile picture. 
+In the user profile page, the camera icon in the page allows user to click and take a picture as user profile picture. Users are allowed to retake pictures if they are not satisfied with current picture.
 
 -Status: Fully functioning
 
@@ -144,7 +144,9 @@ Notification
 
 ScreenShot:
 1. Signup
-   <img width="436" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/ea7e45d8-dbf7-4fe9-9149-0614d0405fa0">
+   ![Alt text](Signup.png)
+   ![Alt text](Signup2.png)
+   
 
 
    
