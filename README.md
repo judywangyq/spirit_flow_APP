@@ -148,59 +148,41 @@ ScreenShot:
    ![Alt text](Signup2.png)
    
 
-
-   
 2. SignIn
-   <img width="410" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/7ffe6965-a174-464d-8cfa-c97ffaf3c1d3">
-
+   ![Alt text](SingIn.png) 
+   ![Alt text](SignIn2.png)
 
 
 3. Home
-   <img width="424" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/edd43070-b67d-4375-86c9-ca049e17daaa">
-   
-   <img width="423" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/6ee162c4-1da0-47c2-b2b2-0235f68e18ce">
-   
-   <img width="417" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/34f6953b-6791-41dd-bbeb-91b2661e605b">
-   
-   <img width="417" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/9ca726fb-ea36-4ccb-9f80-198736822b48">
+   ![Alt text](Home.png) 
+   ![Alt text](Home2.png) 
+   ![Alt text](Home3.png) 
+   ![Alt text](Home4.png)
 
 
-
-4. UserProfile
-   <img width="432" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/6e05e5da-df60-496a-97b0-ffaa85cd68d6">
-   
-   <img width="422" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/9ae16d49-6f6f-4d1e-88f5-2551878440c3">
-
+4. UserProfile (with camera)
+   ![Alt text](UserProfile.png) 
+   ![Alt text](UserProfile2.png)
+   ![Alt text](Camera1.jpg) 
+   ![Alt text](Camera2.jpg) 
+   ![Alt text](Camera3.jpg)
 
 
 5. Journal
-   <img width="415" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/637676e5-69ee-4b2b-b663-bde9d8e6a5e5">
+   ![Alt text](Journal.png) 
+   ![Alt text](Journal2.png)
 
 
    
-6. AddNewJournal
-   <img width="432" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/74a178da-4fdc-4a9f-8849-520c9a19b94b">
-   
-   <img width="412" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/57c7d33b-1731-438c-82d8-b541cd5ec4f5">
-   
-   <img width="431" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/aa897500-2744-4418-9078-a6726a0f4d6c">
-
+6. AddNewJournal (with location)
+   ![Alt text](AddNewJournal.png) 
+   ![Alt text](AddNewJournal2.png)
 
 
 7. Discovery
-   <img width="426" alt="image" src="https://github.com/judywangyq/spirit_flow/assets/97942454/1abce4bb-11be-4cb1-a42b-497e722f4750">
-
-   ![Alt text](78ee33fa8c3cc6f855bd2b05cd457c7.png)
+   ![Alt text](Discovery.png)
 
 
-8. Locations
-![Alt text](a9c185acc1894d86d33332e3cfed282.jpg)
-
-
-9. Camera
-![Alt text](WechatIMG15.jpg)
-![Alt text](WechatIMG16.jpg)
-![Alt text](WechatIMG18.jpg)
    
 
 
