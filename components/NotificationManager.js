@@ -1,4 +1,4 @@
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import * as Notifications from "expo-notifications";
 
@@ -37,10 +37,26 @@ export default function NotificationManager() {
   };
   return (
     <View>
-      <Button
+      {/* <Button
         title="Remind me to receive diving energy guidance"
         onPress={scheduleNotificationHandler}
-      />
+      /> */}
+      <TouchableOpacity onPress={scheduleNotificationHandler} style={styles.button}>
+        <Text style={styles.buttonText}>Remind me to receive diving energy guidance !</Text>
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#9b88db',
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});

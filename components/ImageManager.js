@@ -36,7 +36,7 @@ export default function ImageManager({ passImageUri }) {
   };
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={{ alignItems: 'center', marginTop: 50 }}>
       {/* <Button onPress={takeImageHandler} title="Add a profile photo"  /> */}
       <PressableButton
         pressedFunction={takeImageHandler}
@@ -51,6 +51,7 @@ export default function ImageManager({ passImageUri }) {
 }
 const styles = StyleSheet.create({
   image: {
+    marginTop: 50,
     width: 100,
     height: 100,
   },

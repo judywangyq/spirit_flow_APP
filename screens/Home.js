@@ -272,7 +272,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   getMovieButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#9b88db',
     padding: 10,
     margin: 10,
     borderRadius: 5,

@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Text, StyleSheet, FlatList, ScrollView } from '
 import { useNavigation } from '@react-navigation/native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { collection, query, getDocs } from 'firebase/firestore';
+import { LinearGradient } from 'expo-linear-gradient';
+import Colors from '../components/Colors';
 
 export default function Journal() {
   const navigation = useNavigation();
@@ -102,7 +104,12 @@ export default function Journal() {
   };
 
   return (
-
+    <><LinearGradient
+      colors={[
+        Colors.Top,
+        Colors.Bottom,
+      ]} 
+      style={styles.background}/>
     <View>
       <TouchableOpacity onPress={handleAddNew} style={styles.addButton}>
         <Text style={styles.buttonText}>Add New</Text>
@@ -114,13 +121,20 @@ export default function Journal() {
         renderItem={renderItem}
       />
     </View>
-
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
   addButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#9b88db',
     padding: 10,
     margin: 10,
     borderRadius: 5,

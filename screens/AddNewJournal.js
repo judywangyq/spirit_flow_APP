@@ -4,12 +4,24 @@ import firebase from 'firebase/app';
 import { database } from "../firebase/firebaseSetup"
 import { serverTimestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, Alert, ScrollView, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { addJournal, deleteJournal, editJournal } from '../firebase/firebaseHelper'; 
 import { auth } from '../firebase/firebaseSetup';
 import LocationManager from '../components/LocationManager';
+import { LinearGradient } from 'expo-linear-gradient';
+import Colors from '../components/Colors';
 
+
+const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  }
+});
 
 export default function AddNewJournal() {
   const navigation = useNavigation();
@@ -129,6 +141,12 @@ export default function AddNewJournal() {
   };
 
   return (
+    <><LinearGradient
+      colors={[
+        Colors.Top,
+        Colors.Bottom,
+      ]} 
+      style={styles.background}/>
     <ScrollView>
       <View>
 
@@ -189,5 +207,6 @@ export default function AddNewJournal() {
         {editJournalData && <Button title="Delete" onPress={handleDelete} />}
       </View>
     </ScrollView>
+    </>
   );
 }
