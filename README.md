@@ -22,11 +22,11 @@ Yingying:
 
 
 Iteration divided:
+- External API use (Iter1)
 - Authentication (Iter1)
 - Camera use (Iter2)
 - Location use(Iter2)
 - Notification (Iter3)
-- External API use (Iter1)
 
 ==================================================================================================================
 
@@ -90,7 +90,14 @@ editJournal(journalId, updatedJournal)
 
 External API use
 
-Our application leverages the OMDb API (https://www.omdbapi.com/) to fetch movie recommendations based on keywords generated from three tarot cards. The process involves the following steps:
+Our application leverages the OMDb API (https://www.omdbapi.com/) to fetch movie recommendations based on keywords generated from three tarot cards. 
+
+API key: 2e27f579
+Append following to all of our API requests:
+OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=2e27f579
+
+
+The process involves the following steps:
 
 Keywords Generation:
 The application generates keywords from three tarot cards, such as "confession," "passion," and "suspicion."
@@ -132,7 +139,7 @@ Users are presented with two location options:
 Integration with Firestore:
 The chosen location information is then incorporated into the journal object before being stored in the Firestore database.
 
-The 'Discovery' screen offers a panoramic view of journals created by users, each uniquely marked by location pins. The pins, distinguished by colors, discreetly reveal the energy level (ranging from black for level 1 to red for level 5) associated with each journal. This curated glimpse into shared experiences maintains user privacy by anonymously displaying only the energy levels at specific locations, fostering a sense of community without divulging detailed journal content.
+The 'Discovery' screen offers a panoramic view of journals created by users, each uniquely marked by location pins. The pins, distinguished by colors, discreetly reveal the energy level (ranging from black for level 1 to red for level 5) associated with each journal. This curated glimpse into shared experiences maintains user privacy by anonymously displaying only the energy levels and fake user names at specific locations, fostering a sense of community without divulging detailed journal content.
 
 -Status: "Locate Me" Fully functioning
 
@@ -140,7 +147,7 @@ The 'Discovery' screen offers a panoramic view of journals created by users, eac
 
 Notification
 
-In Home Page, the button "CLick for Daily Inspiration at 9AM!" allows users to click to set the daily 9 a.m. reminder.
+In Home Page, the button "CLick for Daily Inspiration at 9AM!" allows users to click to set and receive reminder at daily 9 a.m..
 
 -Status: Fully functioning
 ==================================================================================================================

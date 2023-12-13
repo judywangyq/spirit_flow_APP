@@ -83,6 +83,38 @@ export default function Discovery() {
         return 'pink'; 
     }
   };
+
+  const ratingConvert = (rating) => {
+    switch (rating) {
+      case 1:
+        return '*';
+      case 2:
+        return '**';
+      case 3:
+        return '***';
+      case 4:
+        return '****';
+      case 5:
+        return '*****';
+      default:
+        return '';
+    }
+  };  
+
+  const generateRandomName = () => {
+    const names = ['Cherry', 'Apple', 'Banana', 'Orange', 'Grape', 'Milk','Beef','Hat'];
+    const randomIndex = Math.floor(Math.random() * names.length);
+    return names[randomIndex];
+  };
+
+  // function generateRandomDate() {
+  //   const currentTimestamp = Date.now();
+  //   const oneYearAgoTimestamp = currentTimestamp - 31536000000; // milliseconds in a year
+  
+  //   const randomTimestamp = Math.floor(Math.random() * (currentTimestamp - oneYearAgoTimestamp)) + oneYearAgoTimestamp;
+  
+  //   return new Date(randomTimestamp);
+  // }
   
 
   return (
@@ -101,7 +133,9 @@ export default function Discovery() {
           <Marker
             key={index}
             coordinate={{ latitude: marker.location.latitude, longitude: marker.location.longitude }}
-            title={`Energy Level: ${marker.energyRating}`}
+            // title={`User: ${generateRandomName()}\nEnergy Level: ${ratingConvert(marker.energyRating)}`}
+            title={`User: ${generateRandomName()}`}
+            description={`Energy Level: ${ratingConvert(marker.energyRating)}`}
             pinColor={getPinColor(marker.energyRating)}
           />
         ))}

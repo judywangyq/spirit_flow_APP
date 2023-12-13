@@ -33,7 +33,7 @@ export default function NotificationManager() {
         },
         trigger: {
           repeats: true,
-          daily: 1,
+          // daily: 1,
           hour: 9,
           minute: 0
         },

@@ -104,15 +104,32 @@ export default function Journal() {
     console.log('Add New button pressed');
   };
 
+  const ratingConvert = (rating) => {
+    switch (rating) {
+      case 1:
+        return '*';
+      case 2:
+        return '**';
+      case 3:
+        return '***';
+      case 4:
+        return '****';
+      case 5:
+        return '*****';
+      default:
+        return '';
+    }
+  };
+
   const renderItem = ({ item }) => {
     const formattedDate = item.date ? new Date(item.date.seconds * 1000).toLocaleDateString() : '';
 
     return (
       <TouchableOpacity style={styles.journalItem} onPress={() => handleJournalPress(item)}>
         {item.date && <Text>Date: {formattedDate}</Text>}
-        <Text>{item.positiveThoughts}</Text>
-        <Text>{item.negativeThoughts}</Text>
-        <Text>{item.energyRating}</Text>
+        <Text>I felt positive that: {item.positiveThoughts}</Text>
+        <Text>I am working on: {item.negativeThoughts}</Text>
+        <Text>My Energy at the moment was rated at: {ratingConvert(item.energyRating)}</Text>
       </TouchableOpacity>
     );
   };
