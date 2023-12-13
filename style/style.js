@@ -5,7 +5,7 @@ export const styles = {
       boxSizing: 'border-box',
     },
     body: {
-      fontFamily: 'Arial, sans-serif',
+      // fontFamily: 'Arial, sans-serif',
       fontSize: '16px',
       lineHeight: '1.5',
     },

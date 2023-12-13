@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup";
 import { addUser } from "../firebase/firebaseHelper";
+import { LinearGradient } from 'expo-linear-gradient';
+import Colors from '../components/Colors';
 
 export default function Signup({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -73,71 +75,81 @@ const signupHandler = async () => {
   };
   
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>SpiritFlow</Text>
-      <View style={styles.spacing} />
-      <Text style={styles.label}>Full Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Full Name"
-        value={fullName}
-        onChangeText={(changedText) => {
-          setFullName(changedText);
-        }}
-      />
+    <><LinearGradient
+      colors={[
+        Colors.Top,
+        Colors.Bottom,
+      ]} 
+      style={styles.background}/>
+      <View style={styles.container}>
+        <Text style={styles.title}>SpiritFlow</Text>
+        <View style={styles.spacing} />
+        <Text style={styles.label}>Full Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Full Name"
+          value={fullName}
+          onChangeText={(changedText) => {
+            setFullName(changedText);
+          } } />
 
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={(changedText) => {
-          setEmail(changedText);
-        }}
-      />
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={(changedText) => {
+            setEmail(changedText);
+          } } />
 
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        placeholder="Password"
-        value={password}
-        onChangeText={(changedText) => {
-          setPassword(changedText);
-        }}
-      />
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          placeholder="Password"
+          value={password}
+          onChangeText={(changedText) => {
+            setPassword(changedText);
+          } } />
 
-      <Text style={styles.label}>Confirm Password</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChangeText={(changedText) => {
-          setConfirmPassword(changedText);
-        }}
-      />
+        <Text style={styles.label}>Confirm Password</Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChangeText={(changedText) => {
+            setConfirmPassword(changedText);
+          } } />
 
-      <Button title="Register" onPress={signupHandler} />
-      <Button title="Already Registered? Login" onPress={loginHandler} />
-    </View>
+        <Button title="Register" onPress={signupHandler} />
+        <Button title="Already Registered? Login" onPress={loginHandler} />
+      </View></>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "stretch",
     paddingHorizontal: 20, 
   },
   title: {
+    color:'#472e32',
     fontSize: 50, 
     fontWeight: "bold", 
     marginLeft: 10,
     marginTop: 100, 
     marginBottom: 10,
-    fontFamily:"Cochin",
+    // fontFamily:'Arial, sans-serif',
   },
   spacing: {
     marginBottom: 80,

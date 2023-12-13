@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { auth, database } from "../firebase/firebaseSetup";
 import { getDocs, collection, query, where, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 import ImageManager from "../components/ImageManager";
+import { LinearGradient } from 'expo-linear-gradient';
+import Colors from '../components/Colors';
 
 const UserProfile = () => {
   const [fullName, setFullName] = useState('');
@@ -103,6 +105,12 @@ const UserProfile = () => {
   }
 
   return (
+    <><LinearGradient
+      colors={[
+        Colors.Top,
+        Colors.Bottom,
+      ]} 
+      style={styles.background}/>
     <View style={styles.container}>
       <ImageManager passImageUri={passImageUri} />
       {isEditing ? (
@@ -119,28 +127,37 @@ const UserProfile = () => {
             value={email}
             editable={false}
           />
-          <View style={styles.buttonContainer}>
-            <Button title="Save" onPress={handleSavePress} />
-            <Button title="Cancel" onPress={handleCancelPress} />
-          </View>
+          <TouchableOpacity onPress={handleSavePress} style={styles.button}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCancelPress} style={styles.button}>
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.viewContainer}>
           <Text style={styles.label}>Full Name: {fullName}</Text>
           <Text style={styles.label}>Email: {email}</Text>
-          <View style={styles.buttonContainer}>
-            <Button title="Edit" onPress={handleEditPress} />
-          </View>
+          <TouchableOpacity onPress={handleEditPress} style={styles.button}>
+            <Text style={styles.buttonText}>Edit</Text>
+          </TouchableOpacity>
         </View>
       )}
-    </View>
+    </View></>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "stretch",
     paddingHorizontal: 20,
   },
@@ -162,9 +179,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     alignSelf: "flex-start",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  // buttonContainer: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-around",
+  // },
+  button: {
+    backgroundColor: '#9b88db',
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 

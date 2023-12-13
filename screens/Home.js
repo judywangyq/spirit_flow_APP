@@ -4,7 +4,9 @@ import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView } from 'rea
 import { getRecommendedMovie } from '../components/movieService'
 import { collection, onSnapshot, getDocs } from 'firebase/firestore';
 import { database } from '../firebase/firebaseSetup';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import cardsImagePath from '../components/cardsPath';
+import NotificationManager from '../components/NotificationManager';
 
 function Home() {
   const [cards, setCards] = useState([]);
@@ -44,19 +46,53 @@ function Home() {
   
 
 
-  const displayStoredCards = () => {
-    const cardsStored = false; // Implement your logic here
-    const lastClicked = new Date().toISOString().split('T')[0];
+  // const displayStoredCards = () => {
+  //   const cardsStored = false; // Implement your logic here
+  //   const lastClicked = new Date().toISOString().split('T')[0];
 
-    if (cardsStored && lastClicked === lastClickedDate) {
-      setShowCards(true);
-    } else {
-      generateCards();
+  //   if (cardsStored && lastClicked === lastClickedDate) {
+  //     setShowCards(true);
+  //   } else {
+  //     generateCards();
+  //   }
+  // };
+
+  const displayStoredCards = async () => {
+    try {
+      const storedCards = await AsyncStorage.getItem('selectedCards');
+      const lastClickedDate = await AsyncStorage.getItem('lastClickedDate');
+      const currentDate = new Date().toISOString().split('T')[0];
+
+      if (storedCards && lastClickedDate === currentDate) {
+        setSelectedCards(JSON.parse(storedCards));
+        setShowCards(true);
+      } else {
+        generateCards();
+      }
+    } catch (error) {
+      console.error('Error retrieving stored cards:', error);
     }
   };
   
 
-  const generateCards = () => {
+  // const generateCards = () => {
+  //   if (cards.length > 0) {
+  //     const randomCards = [];
+  //     while (randomCards.length < 3) {
+  //       const randomIndex = getRandomNumber(0, cards.length - 1);
+  //       const randomCard = cards[randomIndex];
+  //       if (!randomCards.includes(randomCard)) {
+  //         randomCards.push(randomCard);
+  //       }
+  //     }
+  //     setSelectedCards(randomCards);
+  //     setShowCards(true);
+  //     const currentDate = new Date().toISOString().split('T')[0];
+  //     setLastClickedDate(currentDate);
+  //   }
+  // };
+
+  const generateCards = async () => {
     if (cards.length > 0) {
       const randomCards = [];
       while (randomCards.length < 3) {
@@ -68,8 +104,14 @@ function Home() {
       }
       setSelectedCards(randomCards);
       setShowCards(true);
-      const currentDate = new Date().toISOString().split('T')[0];
-      setLastClickedDate(currentDate);
+
+      try {
+        await AsyncStorage.setItem('selectedCards', JSON.stringify(randomCards));
+        const currentDate = new Date().toISOString().split('T')[0];
+        await AsyncStorage.setItem('lastClickedDate', currentDate);
+      } catch (error) {
+        console.error('Error storing selected cards:', error);
+      }
     }
   };
 
@@ -158,6 +200,8 @@ function Home() {
   return (
     <ScrollView>
 
+      <NotificationManager />
+
       <View style={styles.cardContainer}>
         {!showCards ? (
           <TouchableOpacity style={styles.button} onPress={handleGetReading}>
@@ -170,7 +214,7 @@ function Home() {
               <View style={styles.card}>
                 <Image
                   source={cardsImagePath[selectedCards[0].img]}
-                  style={styles.cardImage}
+                  // style={styles.cardImage}
                   resizeMode="contain"
                 />
 
@@ -269,7 +313,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   getMovieButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#9b88db',
     padding: 10,
     margin: 10,
     borderRadius: 5,
@@ -277,5 +321,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
   },
 });

@@ -4,17 +4,22 @@ import firebase from 'firebase/app';
 import { database } from "../firebase/firebaseSetup"
 import { serverTimestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, Alert, ScrollView, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { addJournal, deleteJournal, editJournal } from '../firebase/firebaseHelper'; 
 import { auth } from '../firebase/firebaseSetup';
 import LocationManager from '../components/LocationManager';
-
+import { LinearGradient } from 'expo-linear-gradient';
+import Colors from '../components/Colors';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function AddNewJournal() {
   const navigation = useNavigation();
   const route = useRoute();
   const editJournalData = route.params?.editJournal;
+
+  // const routeSelectedLocation = route.params?.selectedLocation;
 
   const [positiveThoughts, setPositiveThoughts] = useState('');
   const [negativeThoughts, setNegativeThoughts] = useState('');
@@ -23,6 +28,12 @@ export default function AddNewJournal() {
   const [journalDate, setJournalDate] = useState(new Date());
 
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  // useEffect(() => {
+  //   console.log('Route Params:', route.params);
+  //   console.log('Selected Location from Route Params:', routeSelectedLocation);
+  //   console.log('Selected Location from "Locate Me!":', selectedLocation);
+  // }, [routeSelectedLocation, selectedLocation, route.params]);
 
   useEffect(() => {
     if (editJournalData) {
@@ -39,6 +50,8 @@ export default function AddNewJournal() {
   }, [editJournalData]);
 
   const handleSave = async () => {
+
+    // const effectiveSelectedLocation = selectedLocation || routeSelectedLocation;
 
     console.log('Selected Location:', selectedLocation);
 
@@ -58,6 +71,8 @@ export default function AddNewJournal() {
       location: {
         latitude: selectedLocation.latitude,
         longitude: selectedLocation.longitude,
+        // latitude: effectiveSelectedLocation.latitude,
+        // longitude: effectiveSelectedLocation.longitude,
       },
     };
 
@@ -117,32 +132,41 @@ export default function AddNewJournal() {
   };
 
   return (
+    <><LinearGradient
+      colors={[
+        Colors.Top,
+        Colors.Bottom,
+      ]} 
+      style={styles.background}/>
+
     <ScrollView>
       <View>
 
-        <View>
-          <Text>Date: {journalDate.toISOString()}</Text>
+        <View style={styles.inputContainer}>
+          <Text  style={styles.label}>Date: {journalDate.toISOString()}</Text>
         </View>
 
-        <View>
-          <Text>My Positive Thoughts:</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>My Positive Thoughts:</Text>
           <TextInput
+            style={styles.textInput}
             placeholder="I feel happy..."
             value={positiveThoughts}
             onChangeText={setPositiveThoughts}
           />
         </View>
 
-        <View>
-          <Text>My Negative Thoughts:</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>My Negative Thoughts:</Text>
           <TextInput
+          style={styles.textInput}
             placeholder="I feel upset..."
             value={negativeThoughts}
             onChangeText={setNegativeThoughts}
           />
         </View>
 
-        <View>
+        {/* <View>
           <Text>Energy Rating:</Text>
           <TextInput
             placeholder="*****"
@@ -150,6 +174,21 @@ export default function AddNewJournal() {
             onChangeText={setEnergyRating}
             keyboardType="numeric"
           />
+        </View> */}
+        <View style={styles.inputContainerpicker}>
+          <Text style={styles.label}>Energy Rating:</Text>
+          <Picker
+            style={styles.picker}
+            selectedValue={energyRating}
+            onValueChange={(itemValue) => setEnergyRating(itemValue)}
+            mode="dropdown"
+          >
+            <Picker.Item label="*" value="1" />
+            <Picker.Item label="**" value="2" />
+            <Picker.Item label="***" value="3" />
+            <Picker.Item label="****" value="4" />
+            <Picker.Item label="*****" value="5" />
+          </Picker>
         </View>
 
         <View>
@@ -157,14 +196,86 @@ export default function AddNewJournal() {
           <Text>{selectedLocation ? `${selectedLocation.latitude}, ${selectedLocation.longitude}` : 'Loading...'}</Text>
         </View>
 
+        {editJournalData && selectedLocation && (
+            <MapView
+              style={{ height: 200, marginVertical: 10 }}
+              initialRegion={{
+                latitude: selectedLocation.latitude,
+                longitude: selectedLocation.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              <Marker
+                coordinate={{
+                  latitude: selectedLocation.latitude,
+                  longitude: selectedLocation.longitude,
+                }}
+                title="Selected Location"
+              />
+            </MapView>
+          )}
+
+        {/* <View>
+          <Text>Location:</Text>
+          <Text>
+            {selectedLocation
+              ? `${selectedLocation.latitude}, ${selectedLocation.longitude}`
+              : routeSelectedLocation
+              ? `${routeSelectedLocation.latitude}, ${routeSelectedLocation.longitude}`
+              : 'Loading...'}
+          </Text>
+        </View> */}
+
         <LocationManager
           onLocationChange={(location) => setSelectedLocation(location)}
         />
 
-        <Button title="Save" onPress={handleSave} />
+        <Button title="Save" onPress={handleSave} titleStyle={styles.buttonText} />
         <Button title="Cancel" onPress={handleCancel} />
         {editJournalData && <Button title="Delete" onPress={handleDelete} />}
       </View>
     </ScrollView>
+    </>
   );
 }
+
+
+const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
+  inputContainer: {
+    marginVertical: 10,
+  },
+  inputContainerpicker: {
+    marginVertical: 5,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 3,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    fontSize: 16,
+    borderRadius: 5,
+  },
+  picker: {
+    width: '70%', 
+    borderWidth: 0.5,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+});

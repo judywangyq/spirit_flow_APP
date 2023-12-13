@@ -16,10 +16,26 @@ import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import PressableButton from "./PressableButton";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import AddNewJournal from "./screens/AddNewJournal";
 import Discovery from "./screens/Discovery";
 import Map from "./components/Map";
+
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+
+  handleNotification: async function (notification) {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: true,
+    }
+  }
+  
+});
 
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +54,9 @@ const AppTabs = () => (
       name="Home"
       component={Home}
       options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="home" size={24} color="black" />
+        ),
         headerRight: () => (
           <PressableButton
             pressedFunction={async () => {
@@ -47,18 +66,34 @@ const AppTabs = () => (
               // const credential = EmailAuthProvider.credential(user.email, "123456");
               try {
                 signOut(auth);
-                // // 重新认证用户
-                // await reauthenticateWithCredential(user, credential);
-
-                // // 在重新认证成功后执行注销操作
-                // await auth.signOut();
-                // console.log('User logged out successfully');
-
-                // // 重新获取当前用户对象
-                // const updatedCurrentUser = auth.currentUser;
-
-                // // 使用更新后的用户对象进行其他操作
-                // console.log("Updated User:", updatedCurrentUser);
+              } catch (err) {
+                console.log("signout err", err);
+              }
+            }}
+            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
+            pressedStyle={{ opacity: 0.6 }}
+          >
+            <Ionicons name="exit" size={24} color="black" />
+          </PressableButton>
+        ),
+      })}
+    />
+    <Tab.Screen 
+      name="Journal" 
+      component={Journal}
+      options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="journal" size={24} color="black" />
+        ),
+        headerRight: () => (
+          <PressableButton
+            pressedFunction={async () => {
+              console.log("logout pressed");
+              const user = auth.currentUser;
+              // console.log(user.providerData);
+              // const credential = EmailAuthProvider.credential(user.email, "123456");
+              try {
+                signOut(auth);
               } catch (err) {
                 console.log("signout err", err);
   }
@@ -69,41 +104,23 @@ const AppTabs = () => (
             <Ionicons name="exit" size={24} color="black" />
           </PressableButton>
         ),
-        headerLeft: () => (
-          <PressableButton
-            pressedFunction={() => {
-              console.log("Menu Button pressed");
-              }
-            }
-            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
-            pressedStyle={{ opacity: 0.6 }}
-          >
-            <Ionicons name="menu" size={24} color="black" />
-          </PressableButton>
-        ),
-      })}
-    />
-    <Tab.Screen name="Journal" component={Journal} />
+      })} 
+      />
     {/* <Tab.Screen name="Map" component={Map} /> */}
-    <Tab.Screen name="User Profile" component={UserProfile} />
-    <Tab.Screen name="Discovery" component={Discovery} />
-  </Tab.Navigator>
-);
-
-const AppStack = (
-  <>
-    <Stack.Screen
-      name="SpiritFlow"
-      component={AppTabs}
-    />
-    {/* <Stack.Screen
-      name="UserProfile"
-      component={UserProfile}
-      options={{
+    <Tab.Screen 
+      name="User Profile" 
+      component={UserProfile} 
+      options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesome name="user" size={24} color="black" />
+        ),
         headerRight: () => (
           <PressableButton
-            pressedFunction={() => {
+            pressedFunction={async () => {
               console.log("logout pressed");
+              const user = auth.currentUser;
+              // console.log(user.providerData);
+              // const credential = EmailAuthProvider.credential(user.email, "123456");
               try {
                 signOut(auth);
               } catch (err) {
@@ -116,8 +133,45 @@ const AppStack = (
             <Ionicons name="exit" size={24} color="black" />
           </PressableButton>
         ),
-      }}
-    /> */}
+      })} />
+    <Tab.Screen 
+      name="Discovery" 
+      component={Discovery}
+      options={({ navigation }) => ({
+
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="nature-people" size={24} color="black" />
+        ),
+
+        headerRight: () => (
+          <PressableButton
+            pressedFunction={async () => {
+              console.log("logout pressed");
+              const user = auth.currentUser;
+              // console.log(user.providerData);
+              // const credential = EmailAuthProvider.credential(user.email, "123456");
+              try {
+                signOut(auth);
+              } catch (err) {
+                console.log("signout err", err);
+  }
+            }}
+            defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
+            pressedStyle={{ opacity: 0.6 }}
+          >
+            <Ionicons name="exit" size={24} color="black" />
+          </PressableButton>
+        ),
+      })} />
+  </Tab.Navigator>
+);
+
+const AppStack = (
+  <>
+    <Stack.Screen
+      name="SpiritFlow"
+      component={AppTabs}
+    />
     <Stack.Screen
       name="Add New Journal"
       component={AddNewJournal}
@@ -130,7 +184,7 @@ const AppStack = (
 export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("******************This is User******************");
       console.log(user);
       console.log("******************This is User******************");
@@ -142,12 +196,43 @@ export default function App() {
         setIsUserLoggedIn(false);
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log("received notification ", notification);
+      }
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(
+          "received response notification ",
+          response.notification.request.content.data.url
+        );
+        Linking.openURL(response.notification.request.content.data.url);
+      }
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: "#b8a" },
+          headerStyle: { backgroundColor: "#614385" },
           headerTintColor: "white",
         }}
         initialRouteName="Signup"
