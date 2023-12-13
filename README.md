@@ -1,4 +1,4 @@
-Iteration 1 / 2
+Iteration 1 / 2 / 3
 
 Members: Judy Wang, Yingying Feng
 
@@ -9,7 +9,16 @@ In addition, our app goes beyond readings and offers personalized movie recommen
 
 
 Contributions:
-Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery, firestore Database, and the map location function(Contributed by Judy). Worked on other files together.
+Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page, desined and implemented the styles for the app(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery page, firestore Database, and the map location function as well as the notification function(Contributed by Judy). Worked on other files together.
+
+Contributions for Iter3:
+Judy:
+   - Work on the notification function;
+   - Add a linear graph in the Journal Page
+   - Add icons for buttons on buttom tab
+Yingying:
+   - Design and improve the overall appearance of the app
+   - Add logout button on every single page so that user can logout anytime they want without going back to home page.
 
 
 Iteration divided:
@@ -79,10 +88,6 @@ editJournal(journalId, updatedJournal)
 
 ==================================================================================================================
 
-Authentication
-
-==================================================================================================================
-
 External API use
 
 Our application leverages the OMDb API (https://www.omdbapi.com/) to fetch movie recommendations based on keywords generated from three tarot cards. The process involves the following steps:
@@ -122,7 +127,6 @@ In the "Add New Journal" feature, location services play a crucial role in enric
 Location Options:
 Users are presented with two location options:
 "Locate Me": Retrieves the real-time location of the user.
-"Let Me Choose on the Map": Allows users to manually select a desired location.
 
 
 Integration with Firestore:
@@ -131,13 +135,14 @@ The chosen location information is then incorporated into the journal object bef
 The 'Discovery' screen offers a panoramic view of journals created by users, each uniquely marked by location pins. The pins, distinguished by colors, discreetly reveal the energy level (ranging from black for level 1 to red for level 5) associated with each journal. This curated glimpse into shared experiences maintains user privacy by anonymously displaying only the energy levels at specific locations, fostering a sense of community without divulging detailed journal content.
 
 -Status: "Locate Me" Fully functioning
--Status: "Let me choose on the map" partially functioning
 
 ==================================================================================================================
 
 Notification
-(To be Done in next iteration)
 
+In Home Page, the button "CLick for Daily Inspiration at 9AM!" allows users to click to set the daily 9 a.m. reminder.
+
+-Status: Fully functioning
 ==================================================================================================================
 
 
@@ -153,25 +158,24 @@ ScreenShot:
    ![Alt text](SignIn2.png)
 
 
-3. Home
-   ![Alt text](Home.png) 
+3. Home (with notification)
+   ![Alt text](Home.png)
    ![Alt text](Home2.png) 
    ![Alt text](Home3.png) 
    ![Alt text](Home4.png)
-
+   ![Alt text](<Home notification.png>) 
+   ![Alt text](<Notification Screenshot.jpg>)
 
 4. UserProfile (with camera)
-   ![Alt text](UserProfile.png) 
-   ![Alt text](UserProfile2.png)
+   ![Alt text](UserProfile.png)
+   ![Alt text](UserProfile2.png) 
    ![Alt text](Camera1.jpg) 
    ![Alt text](Camera2.jpg) 
    ![Alt text](Camera3.jpg)
 
 
 5. Journal
-   ![Alt text](Journal.png) 
-   ![Alt text](Journal2.png)
-
+   ![Alt text](Journal.png)
 
    
 6. AddNewJournal (with location)
