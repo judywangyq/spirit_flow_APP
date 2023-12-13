@@ -45,18 +45,6 @@ function Home() {
   }, [selectedCards]);
   
 
-
-  // const displayStoredCards = () => {
-  //   const cardsStored = false; // Implement your logic here
-  //   const lastClicked = new Date().toISOString().split('T')[0];
-
-  //   if (cardsStored && lastClicked === lastClickedDate) {
-  //     setShowCards(true);
-  //   } else {
-  //     generateCards();
-  //   }
-  // };
-
   const displayStoredCards = async () => {
     try {
       const storedCards = await AsyncStorage.getItem('selectedCards');
@@ -74,23 +62,6 @@ function Home() {
     }
   };
   
-
-  // const generateCards = () => {
-  //   if (cards.length > 0) {
-  //     const randomCards = [];
-  //     while (randomCards.length < 3) {
-  //       const randomIndex = getRandomNumber(0, cards.length - 1);
-  //       const randomCard = cards[randomIndex];
-  //       if (!randomCards.includes(randomCard)) {
-  //         randomCards.push(randomCard);
-  //       }
-  //     }
-  //     setSelectedCards(randomCards);
-  //     setShowCards(true);
-  //     const currentDate = new Date().toISOString().split('T')[0];
-  //     setLastClickedDate(currentDate);
-  //   }
-  // };
 
   const generateCards = async () => {
     if (cards.length > 0) {
@@ -189,13 +160,6 @@ function Home() {
     }
   }
 
-  // const cardsImagePath = {
-  //   c03: require('../assets/cards/c03.jpg'),
-  //   p01: require('../assets/cards/p01.jpg'),
-  //   w14: require('../assets/cards/w14.jpg'),
-  // };
-  // console.log(`${baseImagePath}${selectedCards[0].img}`);
-
 
   return (
     <ScrollView>
@@ -231,18 +195,6 @@ function Home() {
             </View>
 
             <View style={styles.bottomCards}>
-              {/* {selectedCards.slice(1).map((card) => (
-                <View key={card.id} style={styles.bottomCard}>
-                  <Text style={styles.heading}>{card.name}</Text>
-                  <Text style={styles.text}>
-                    Fortune Telling: {card.fortune_telling}
-                  </Text>
-                  <Text style={styles.text}>Keywords: {selectedCards[0].keywords}</Text>
-                  <Text style={styles.text}>
-                    Questions to Ask: {selectedCards[0].questions_to_ask}
-                  </Text>
-                </View>
-              ))} */}
               <View style={styles.card}>
                 <Image
                   source={cardsImagePath[selectedCards[1].img]}
@@ -324,3 +276,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
