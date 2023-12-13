@@ -5,6 +5,7 @@ import { database } from "../firebase/firebaseSetup"
 import { serverTimestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert, ScrollView, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { addJournal, deleteJournal, editJournal } from '../firebase/firebaseHelper'; 
 import { auth } from '../firebase/firebaseSetup';
@@ -12,17 +13,6 @@ import LocationManager from '../components/LocationManager';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../components/Colors';
 import MapView, { Marker } from 'react-native-maps';
-
-
-const styles = StyleSheet.create({
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 900,
-  }
-});
 
 export default function AddNewJournal() {
   const navigation = useNavigation();
@@ -148,32 +138,35 @@ export default function AddNewJournal() {
         Colors.Bottom,
       ]} 
       style={styles.background}/>
+
     <ScrollView>
       <View>
 
-        <View>
-          <Text>Date: {journalDate.toISOString()}</Text>
+        <View style={styles.inputContainer}>
+          <Text  style={styles.label}>Date: {journalDate.toISOString()}</Text>
         </View>
 
-        <View>
-          <Text>My Positive Thoughts:</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>My Positive Thoughts:</Text>
           <TextInput
+            style={styles.textInput}
             placeholder="I feel happy..."
             value={positiveThoughts}
             onChangeText={setPositiveThoughts}
           />
         </View>
 
-        <View>
-          <Text>My Negative Thoughts:</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>My Negative Thoughts:</Text>
           <TextInput
+          style={styles.textInput}
             placeholder="I feel upset..."
             value={negativeThoughts}
             onChangeText={setNegativeThoughts}
           />
         </View>
 
-        <View>
+        {/* <View>
           <Text>Energy Rating:</Text>
           <TextInput
             placeholder="*****"
@@ -181,6 +174,20 @@ export default function AddNewJournal() {
             onChangeText={setEnergyRating}
             keyboardType="numeric"
           />
+        </View> */}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Energy Rating:</Text>
+          <Picker
+            style={styles.picker}
+            selectedValue={energyRating}
+            onValueChange={(itemValue) => setEnergyRating(itemValue)}
+          >
+            <Picker.Item label="*" value="1" />
+            <Picker.Item label="**" value="2" />
+            <Picker.Item label="***" value="3" />
+            <Picker.Item label="****" value="4" />
+            <Picker.Item label="*****" value="5" />
+          </Picker>
         </View>
 
         <View>
@@ -188,7 +195,7 @@ export default function AddNewJournal() {
           <Text>{selectedLocation ? `${selectedLocation.latitude}, ${selectedLocation.longitude}` : 'Loading...'}</Text>
         </View>
 
-        {selectedLocation && (
+        {editJournalData && selectedLocation && (
             <MapView
               style={{ height: 200, marginVertical: 10 }}
               initialRegion={{
@@ -231,3 +238,33 @@ export default function AddNewJournal() {
     </>
   );
 }
+
+
+const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
+  inputContainer: {
+    marginVertical: 10,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    fontSize: 16,
+    borderRadius: 5,
+  },
+  picker: {
+    borderWidth: 0.5,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+});

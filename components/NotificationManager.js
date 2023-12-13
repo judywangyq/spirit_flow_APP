@@ -16,6 +16,7 @@ export default function NotificationManager() {
       return response.granted;
     } catch (err) { console.log("verify permission ", err) }
   };
+
   const scheduleNotificationHandler = async () => {
     try {
       const hasPermission = await verifyPermission();
@@ -25,16 +26,23 @@ export default function NotificationManager() {
       }
       Notifications.scheduleNotificationAsync({
         content: {
-          title: "first notification",
-          body: "OUR FIRST NOTIFICATION EVER!",
+          title: "Your daily notification is set!",
+          body: "You'll receive a daily notification at 9 AM",
           // data: { URL:"www.google.com" },
         },
-        trigger: { seconds: 5 },
+        trigger: {
+          repeats: true,
+          daily: 1,
+          hour: 9,
+          minute: 0
+        },
       });
+      Alert.alert("Notification Set", "You'll be reminded every day at 9 AM!");
     } catch (err) {
       console.log("schedule notification error ", err);
     }
   };
+
   return (
     <View>
       {/* <Button
@@ -42,7 +50,7 @@ export default function NotificationManager() {
         onPress={scheduleNotificationHandler}
       /> */}
       <TouchableOpacity onPress={scheduleNotificationHandler} style={styles.button}>
-        <Text style={styles.buttonText}>Remind me to receive diving energy guidance !</Text>
+        <Text style={styles.buttonText}>Click here to receive daily guidance at 9AM!</Text>
       </TouchableOpacity>
     </View>
   );

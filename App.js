@@ -179,7 +179,39 @@ export default function App() {
         setIsUserLoggedIn(false);
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log("received notification ", notification);
+      }
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(
+          "received response notification ",
+          response.notification.request.content.data.url
+        );
+        Linking.openURL(response.notification.request.content.data.url);
+      }
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator

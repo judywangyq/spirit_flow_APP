@@ -65,7 +65,8 @@ export default function Journal() {
           });
 
           //sort by date
-          journalsData.sort((a, b) => b.date.seconds - a.date.seconds);
+          // journalsData.sort((a, b) => b.date.seconds - a.date.seconds);
+          journalsData.sort((a, b) => b.date - a.date);
 
           setUserJournals(journalsData);
 
@@ -79,9 +80,14 @@ export default function Journal() {
 
         } else {
           setAuthenticated(false);
+          setUserJournals([]);
+          setChartData([]);
+
         }
       } catch (error) {
-        console.error('Error fetching user journals:', error);
+        if (auth.currentUser) {
+          console.error('Error fetching user journals:', error);
+        }
       }
     };
 
@@ -92,8 +98,6 @@ export default function Journal() {
   if (!authenticated) {
     return <Text>You are not signed in.</Text>;
   }
-  
-  
 
   const handleAddNew = () => {
     navigation.navigate('Add New Journal');
