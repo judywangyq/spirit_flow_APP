@@ -158,43 +158,43 @@ In Home Page, the button "CLick for Daily Inspiration at 9AM!" allows users to c
 
 ScreenShot:
 1. Signup
-   ![Alt text](Signup.png)
-   ![Alt text](Signup2.png)
-   
+   ![Signup 10 42 14 AM](https://github.com/judywangyq/spirit_flow/assets/97942454/664f8a14-2471-4665-bb96-4dc65b4b7375)
+   ![Signup2](https://github.com/judywangyq/spirit_flow/assets/97942454/a88a485f-abd4-4ff5-b986-bb4f3a94d820)
+
 
 2. SignIn
-   ![Alt text](SingIn.png) 
-   ![Alt text](SignIn2.png)
+   ![SingIn](https://github.com/judywangyq/spirit_flow/assets/97942454/d01c7076-2d17-4568-af07-ff3b52d816e6)
+   ![SignIn2](https://github.com/judywangyq/spirit_flow/assets/97942454/bdf336af-406d-41b3-8019-41a02aedb5b2)
+
 
 
 3. Home (with notification)
-   ![Alt text](Home.png)
-   ![Alt text](Home2.png) 
-   ![Alt text](Home3.png) 
-   ![Alt text](Home4.png)
-   ![Alt text](<Home notification.png>) 
-   ![Alt text](<Notification Screenshot.jpg>)
+   ![Home 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/affe58e9-aaa4-4673-88cc-fc61f3d5015c)
+   ![Home2 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/4f1282bd-ed6f-4ce3-9209-8e2d80e1d92f)
+   ![Home3 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/aa85b3e1-6a19-4097-84f9-39c703fd7041)
+   ![Home4 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/ad7fd413-4116-4e32-8cc8-6fd9dd7eba4b)
+   ![Home notification](https://github.com/judywangyq/spirit_flow/assets/97942454/c9216750-e7db-4502-a46f-530e979a868d)
+   ![Notification Screenshot](https://github.com/judywangyq/spirit_flow/assets/97942454/4987b697-21b0-49c3-bd59-1d9da14cbb98)
 
-4. UserProfile (with camera)
-   ![Alt text](UserProfile.png)
-   ![Alt text](UserProfile2.png) 
-   ![Alt text](Camera1.jpg) 
-   ![Alt text](Camera2.jpg) 
-   ![Alt text](Camera3.jpg)
-
-
-5. Journal
-   ![Alt text](Journal.png)
-
-   
-6. AddNewJournal (with location)
-   ![Alt text](AddNewJournal.png) 
-   ![Alt text](AddNewJournal2.png)
+5. UserProfile (with camera)
+   ![UserProfile 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/756c6273-d173-404c-bc2e-ca65ac553058)
+   ![UserProfile2 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/6e752657-ef4a-4f90-b345-97626ff7716f)
+   ![Camera1](https://github.com/judywangyq/spirit_flow/assets/97942454/6a672381-80b2-4978-9322-c0ad9174758f)
+   ![Camera2](https://github.com/judywangyq/spirit_flow/assets/97942454/f1bc05fa-515f-4160-b754-a0bfe6d54cf4)
+   ![Camera3](https://github.com/judywangyq/spirit_flow/assets/97942454/bb830fc8-9d34-48e8-b6b5-4364c6ca5167)
 
 
-7. Discovery
-   ![Alt text](Discovery.png)
+6. Journal
+   ![Journal 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/cb44aa6b-cf43-475e-bf3e-a11f2d3e33a1)
 
+
+7. AddNewJournal (with location)
+   ![AddNewJournal 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/666e3670-f347-4efc-8e0e-ccf34b0c8a37)
+   ![AddNewJournal2 2 13 25 PM](https://github.com/judywangyq/spirit_flow/assets/97942454/a388c651-1fc5-4729-bd60-7a08a5ef944b)
+
+
+9. Discovery
+   ![Discovery](https://github.com/judywangyq/spirit_flow/assets/97942454/100955bd-b1e1-444f-b3c1-aeb81beadb8c)
 
    
 
