@@ -12,10 +12,12 @@ Contributions:
 Create React Native components to represent the functionality of the app we are building, designed and implemented the SignUp, Login page, Authentification as well as the User Profile page, including the camera function in user profile page, desined and implemented the styles for the app(Contributed by Yingying), designed and implemented the Home, Journal, AddNewJournal, Discovery page, firestore Database, and the map location function as well as the notification function(Contributed by Judy). Worked on other files together.
 
 Contributions for Iter3:
+
 Judy:
    - Work on the notification function;
    - Add a linear graph in the Journal Page
    - Add icons for buttons on buttom tab
+
 Yingying:
    - Design and improve the overall appearance of the app
    - Add logout button on every single page so that user can logout anytime they want without going back to home page.
