@@ -16,6 +16,8 @@ import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import PressableButton from "./PressableButton";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import AddNewJournal from "./screens/AddNewJournal";
 import Discovery from "./screens/Discovery";
@@ -52,6 +54,9 @@ const AppTabs = () => (
       name="Home"
       component={Home}
       options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="home" size={24} color="black" />
+        ),
         headerRight: () => (
           <PressableButton
             pressedFunction={async () => {
@@ -63,7 +68,7 @@ const AppTabs = () => (
                 signOut(auth);
               } catch (err) {
                 console.log("signout err", err);
-  }
+              }
             }}
             defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
             pressedStyle={{ opacity: 0.6 }}
@@ -77,6 +82,9 @@ const AppTabs = () => (
       name="Journal" 
       component={Journal}
       options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="journal" size={24} color="black" />
+        ),
         headerRight: () => (
           <PressableButton
             pressedFunction={async () => {
@@ -96,12 +104,16 @@ const AppTabs = () => (
             <Ionicons name="exit" size={24} color="black" />
           </PressableButton>
         ),
-      })} />
+      })} 
+      />
     {/* <Tab.Screen name="Map" component={Map} /> */}
     <Tab.Screen 
       name="User Profile" 
       component={UserProfile} 
       options={({ navigation }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesome name="user" size={24} color="black" />
+        ),
         headerRight: () => (
           <PressableButton
             pressedFunction={async () => {
@@ -113,7 +125,7 @@ const AppTabs = () => (
                 signOut(auth);
               } catch (err) {
                 console.log("signout err", err);
-  }
+              }
             }}
             defaultStyle={{ backgroundColor: "#bbb", padding: 5 }}
             pressedStyle={{ opacity: 0.6 }}
@@ -126,6 +138,11 @@ const AppTabs = () => (
       name="Discovery" 
       component={Discovery}
       options={({ navigation }) => ({
+
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="nature-people" size={24} color="black" />
+        ),
+
         headerRight: () => (
           <PressableButton
             pressedFunction={async () => {
@@ -167,7 +184,7 @@ const AppStack = (
 export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("******************This is User******************");
       console.log(user);
       console.log("******************This is User******************");
@@ -209,7 +226,6 @@ export default function App() {
       subscription.remove();
     };
   }, []);
-
 
 
   return (

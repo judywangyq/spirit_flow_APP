@@ -1,6 +1,7 @@
 import { View, Text, Button, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import * as Notifications from "expo-notifications";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function NotificationManager() {
   const verifyPermission = async () => {
@@ -26,8 +27,8 @@ export default function NotificationManager() {
       }
       Notifications.scheduleNotificationAsync({
         content: {
-          title: "Your daily notification is set!",
-          body: "You'll receive a daily notification at 9 AM",
+          title: "Happening Now!",
+          body: "Click to connect with your divine energy",
           // data: { URL:"www.google.com" },
         },
         trigger: {
@@ -50,13 +51,22 @@ export default function NotificationManager() {
         onPress={scheduleNotificationHandler}
       /> */}
       <TouchableOpacity onPress={scheduleNotificationHandler} style={styles.button}>
-        <Text style={styles.buttonText}>Click here to receive daily guidance at 9AM!</Text>
+        <View style={styles.buttonContent}>
+          <Ionicons name="ios-notifications-outline" size={20} color="black" />
+          <Text style={styles.buttonText}>Click for Daily Inspiration at 9AM!</Text>
+          <Ionicons name="ios-notifications-outline" size={20} color="black" />
+        </View>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  buttonContent: {
+    flexDirection: 'row', // Align children horizontally
+    alignItems: 'center', // Center items vertically
+    justifyContent: 'center',
+  },
   button: {
     backgroundColor: '#9b88db',
     padding: 10,
@@ -66,5 +76,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
   },
 });

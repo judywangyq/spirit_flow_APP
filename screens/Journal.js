@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
   },
   journalItem: {
     borderBottomWidth: 1,

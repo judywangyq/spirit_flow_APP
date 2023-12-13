@@ -175,12 +175,13 @@ export default function AddNewJournal() {
             keyboardType="numeric"
           />
         </View> */}
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainerpicker}>
           <Text style={styles.label}>Energy Rating:</Text>
           <Picker
             style={styles.picker}
             selectedValue={energyRating}
             onValueChange={(itemValue) => setEnergyRating(itemValue)}
+            mode="dropdown"
           >
             <Picker.Item label="*" value="1" />
             <Picker.Item label="**" value="2" />
@@ -230,7 +231,7 @@ export default function AddNewJournal() {
           onLocationChange={(location) => setSelectedLocation(location)}
         />
 
-        <Button title="Save" onPress={handleSave} />
+        <Button title="Save" onPress={handleSave} titleStyle={styles.buttonText} />
         <Button title="Cancel" onPress={handleCancel} />
         {editJournalData && <Button title="Delete" onPress={handleDelete} />}
       </View>
@@ -241,6 +242,12 @@ export default function AddNewJournal() {
 
 
 const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+
   background: {
     position: 'absolute',
     left: 0,
@@ -251,9 +258,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginVertical: 10,
   },
+  inputContainerpicker: {
+    marginVertical: 5,
+  },
   label: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 3,
   },
   textInput: {
     borderWidth: 1,
@@ -263,6 +273,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   picker: {
+    width: '70%', 
     borderWidth: 0.5,
     borderColor: '#ccc',
     borderRadius: 5,
