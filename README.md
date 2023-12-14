@@ -6,6 +6,7 @@ App Introduction:
 SpiritFlow provides you with valuable insights, guiding you through life's challenges through tarot cards reading. Uncover key words and thought-provoking questions that will help you navigate your day.
 In addition, our app goes beyond readings and offers personalized movie recommendations to boost your luck and inner peace, letting you embrace a journey of self-discovery and reflection through our journaling feature, allowing you to monitor your energy flows over time.
 
+Watch the App introduction here: https://www.youtube.com/watch?v=mt6vWpXp8r4
 
 
 Contributions:
